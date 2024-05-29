@@ -19,25 +19,104 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         this.Context = context;
     }
     
-    public async Task AddAsync(TEntity entity)
+    public virtual async Task<bool> AddAsync(TEntity entity)
     {
-        Console.WriteLine("adding entity in BaseRepository");
-        await Context.Set<TEntity>().AddAsync(entity);
+        await using (var trans = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                await Context.Set<TEntity>().AddAsync(entity);
+                await Context.SaveChangesAsync();
+                await trans.CommitAsync();
+                Console.WriteLine($"adding {entity.ToString()} in BaseRepository");
+                return true;
+            }
+            catch (Exception)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine($"error adding {entity.ToString()} in BaseRepository");
+                return false;
+            }
+        }
+        
+        
     }
-    public async Task<TEntity?> FindByIdAsync(int id)
+    public virtual async Task<TEntity?> FindByIdAsync(int id)
     {
-        return await Context.Set<TEntity>().FindAsync(id);
+        using (var trans = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                var result = await Context.Set<TEntity>().FindAsync(id);
+                await trans.CommitAsync();
+                Console.WriteLine("finding by id in BaseRepository");
+                return result;
+            }
+            catch (Exception)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine("error finding by id in BaseRepository");
+                return null;
+            }
+        }
     }
-    public void Update(TEntity entity)
+    public virtual async Task<bool> Update(TEntity entity)
     {
-        Context.Set<TEntity>().Update(entity);
+        using (var trans = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                Context.Set<TEntity>().Update(entity);
+                await trans.CommitAsync();
+                Console.WriteLine($"updating {entity.ToString()} in BaseRepository");
+                return true;
+            }
+            catch (Exception)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine($"error updating {entity.ToString()} in BaseRepository");
+                return false;
+            }
+        }
     }
-    public void Remove(TEntity entity)
+    public virtual async Task<bool> Remove(TEntity entity)
     {
-        Context.Set<TEntity>().Remove(entity);
+        using (var trans = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                Context.Set<TEntity>().Remove(entity);
+                await trans.CommitAsync();
+                Console.WriteLine("removing in BaseRepository");
+                return true;
+            }
+            catch (Exception)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine("error removing in BaseRepository");
+                return false;
+            }
+        }
+        
     }
-    public async Task<IEnumerable<TEntity>> ListAsync()
+
+    public virtual async Task<IEnumerable<TEntity>?> ListAsync()
     {
-        return await Context.Set<TEntity>().ToListAsync();
+        using (var trans = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                var result = await Context.Set<TEntity>().ToListAsync();
+                await trans.CommitAsync();
+                Console.WriteLine("listing in BaseRepository");
+                return result;
+            }
+            catch (Exception)
+            {
+                await trans.RollbackAsync();
+                Console.WriteLine("error listing in BaseRepository");
+                return null;
+            }
+        }
     }
 }   
