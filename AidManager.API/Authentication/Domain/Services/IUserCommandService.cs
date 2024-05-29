@@ -5,5 +5,6 @@ namespace AidManager.API.Authentication.Domain.Services;
 
 public interface IUserCommandService
 {
-    public Task<User?> Handle(CreateUserCommand command);
+    Task<User?> Handle(CreateUserCommand command);
+    Task<bool> AuthenticateUser(ValidateUserCredentialsCommand command);
 }

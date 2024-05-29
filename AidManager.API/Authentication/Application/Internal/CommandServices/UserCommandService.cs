@@ -16,4 +16,17 @@ public class UserCommandService(IUserRepository userRepository, IUnitOfWork unit
         await unitOfWork.CompleteAsync();
         return user;
     }
+
+    public async Task<bool> AuthenticateUser(ValidateUserCredentialsCommand command)
+    {
+        var user = await userRepository.FindUserByEmail(command.Email);
+        if (user == null)
+        {
+            return false;
+        }
+        
+        Console.WriteLine("User found in UserRepository");
+        Console.WriteLine(user.Password + " == " + command.Password);
+        return user.Password == command.Password;
+    }
 }

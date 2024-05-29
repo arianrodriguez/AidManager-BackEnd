@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using AidManager.API.Authentication.Domain.Model.Commands;
 using AidManager.API.Authentication.Domain.Model.Queries;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Authentication.Interfaces.REST.Resources;
@@ -45,4 +46,26 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         var usersResources = users.Select(CreateResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(usersResources);
     }
+    
+    // users?email=...
+    [HttpGet]
+    [Route("auth")]
+    [SwaggerResponse(200, "The user was obtained")]
+    public async Task<IActionResult> GetUserByEmail([FromQuery] string email, string password)
+    {
+        var query = new GetUserByEmailQuery(email);
+        var user = await userQueryService.FindUserByEmail(query);
+        if (user == null)
+        {
+            // return the next body in the response: { "message": "User not found" }
+            return Ok(new {message = "User not found", data = new {}});
+        }
+        
+        var resource = CreateUserCredentialsResourceFromEntityAssembler.ToResourceFromEntity(user, password);
+        var command = CreateUserCredentialsCommandFromResourceAssembler.ToCommandFromResource(resource);
+        
+        if(!await userCommandService.AuthenticateUser(command)) return Ok(new {message = "Invalid credentials", data = new {}});
+        return Ok(new {message = "Authenticated", data = user});
+    }
+
 }
