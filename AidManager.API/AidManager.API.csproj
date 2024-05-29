@@ -19,6 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Authentication\Application\Internal\QueryServices\" />
+      <Folder Include="Authentication\Domain\Model\Aggregates\" />
       <Folder Include="SampleBounded\Infraestructure\Persistence\EFC\" />
     </ItemGroup>
 
