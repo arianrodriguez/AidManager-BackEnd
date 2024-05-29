@@ -1,4 +1,5 @@
 using AidManager.API.Authentication.Application.Internal.CommandServices;
+using AidManager.API.Authentication.Application.Internal.QueryServices;
 using AidManager.API.Authentication.Domain.Repositories;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Authentication.Infrastructure.Persistence.EFC.Repositories;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
 
 // Configure the HTTP request pipeline.

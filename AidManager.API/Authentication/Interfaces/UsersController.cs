@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using AidManager.API.Authentication.Domain.Model.Queries;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Authentication.Interfaces.REST.Resources;
 using AidManager.API.Authentication.Interfaces.REST.Transform;
@@ -10,7 +11,7 @@ namespace AidManager.API.Authentication.Interfaces;
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class UsersController(IUserCommandService userCommandService) : ControllerBase
+public class UsersController(IUserCommandService userCommandService, IUserQueryService userQueryService) : ControllerBase
 {
     [HttpPost]
     [SwaggerOperation(
@@ -27,5 +28,21 @@ public class UsersController(IUserCommandService userCommandService) : Controlle
 
         var userResource = CreateResourceFromEntityAssembler.ToResourceFromEntity(user);
         return Ok(userResource);
+    }
+
+    [HttpGet]
+    [SwaggerOperation(
+        Summary = "Obtains all users",
+        Description = "Obtains all users",
+        OperationId = "GetAllUsers"
+    )]
+    [SwaggerResponse(200, "The users were obtained")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var query = new GetAllUsersQuery();
+        var users = await userQueryService.Handle(query);
+        if(users == null) return BadRequest();
+        var usersResources = users.Select(CreateResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(usersResources);
     }
 }
