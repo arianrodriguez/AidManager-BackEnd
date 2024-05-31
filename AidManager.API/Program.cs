@@ -1,3 +1,8 @@
+using AidManager.API.Collaborate.Application.Internal.CommandServices;
+using AidManager.API.Collaborate.Application.Internal.QueryServices;
+using AidManager.API.Collaborate.Domain.Repositories;
+using AidManager.API.Collaborate.Domain.Services;
+using AidManager.API.Collaborate.Infraestructure.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -52,6 +57,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 builder.Services.AddScoped<IBookQueryService, BookQueryService>();
+
+// post bounded context injection configuration
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostCommandService, PostCommandService>();
+builder.Services.AddScoped<IPostQueryService, PostQueryService>();
 
 
 // Configure the HTTP request pipeline.

@@ -8225,31 +8225,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Arian\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\nicol\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Arian\\Documents\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\AidManager.API.csproj",
+      "projectUniqueName": "C:\\UniversidadUPC-Trabajos\\Ciclo-5\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\AidManager.API.csproj",
       "projectName": "AidManager.API",
-      "projectPath": "C:\\Users\\Arian\\Documents\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\AidManager.API.csproj",
-      "packagesPath": "C:\\Users\\Arian\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Arian\\Documents\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\obj\\",
+      "projectPath": "C:\\UniversidadUPC-Trabajos\\Ciclo-5\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\AidManager.API.csproj",
+      "packagesPath": "C:\\Users\\nicol\\.nuget\\packages\\",
+      "outputPath": "C:\\UniversidadUPC-Trabajos\\Ciclo-5\\AplicacionesWeb\\AidManager-BackEnd\\AidManager.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Arian\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\nicol\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -8324,7 +8317,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Arian\\.dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\nicol\\.dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
