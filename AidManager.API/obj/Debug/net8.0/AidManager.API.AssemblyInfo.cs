@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AidManager.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91c62496ea327fd39a0a312df3516ba4cbc93161")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f855708fa44436332bca1da10e6c5320851530c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("AidManager.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AidManager.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
