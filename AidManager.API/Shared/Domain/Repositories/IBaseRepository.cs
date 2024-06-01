@@ -1,4 +1,7 @@
-﻿namespace AidManager.API.Shared.Domain.Repositories;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace AidManager.API.Shared.Domain.Repositories;
 
 public interface IBaseRepository<TEntity>
 {

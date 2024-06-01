@@ -1,4 +1,8 @@
-﻿namespace AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
 
 public static class StringExtensions
 {

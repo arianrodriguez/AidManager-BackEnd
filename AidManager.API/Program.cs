@@ -1,3 +1,4 @@
+using System;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -7,7 +8,12 @@ using AidManager.API.Shared.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Interfaces.ASP.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 

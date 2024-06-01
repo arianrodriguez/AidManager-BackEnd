@@ -1,4 +1,6 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
+using System.Threading.Tasks;
 using AidManager.API.SampleBounded.Domain.Model.Queries;
 using AidManager.API.SampleBounded.Domain.Services;
 using AidManager.API.SampleBounded.Interfaces.REST.Resources;
