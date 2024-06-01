@@ -31,6 +31,11 @@ public class AppDBContext : DbContext
         builder.Entity<Post>().HasKey(p => p.Id);
         builder.Entity<Post>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         
+        // table for events
+        builder.Entity<Event>().ToTable("Events");
+        builder.Entity<Event>().HasKey(e => e.Id);
+        builder.Entity<Event>().Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
+        
         // this is to the name tables conver to snake case "LuchoPortuano" -> "lucho_portuano"
         builder.UseSnakeCaseNamingConvention();
     }
