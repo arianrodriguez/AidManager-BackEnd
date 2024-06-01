@@ -1,4 +1,7 @@
-﻿using AidManager.API.Shared.Domain.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AidManager.API.Shared.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 using Microsoft.EntityFrameworkCore;
 

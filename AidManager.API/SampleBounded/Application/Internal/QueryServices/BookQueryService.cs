@@ -1,4 +1,6 @@
-﻿using AidManager.API.SampleBounded.Domain.Model.Aggregates;
+﻿using System;
+using System.Threading.Tasks;
+using AidManager.API.SampleBounded.Domain.Model.Aggregates;
 using AidManager.API.SampleBounded.Domain.Model.Queries;
 using AidManager.API.SampleBounded.Domain.Repositories;
 using AidManager.API.SampleBounded.Domain.Services;
