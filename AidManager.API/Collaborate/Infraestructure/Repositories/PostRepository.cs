@@ -1,4 +1,7 @@
-﻿using AidManager.API.Collaborate.Domain.Model.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Repositories;

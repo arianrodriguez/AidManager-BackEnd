@@ -1,4 +1,8 @@
-﻿using AidManager.API.SampleBounded.Domain.Model.Aggregates;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AidManager.API.SampleBounded.Domain.Model.Aggregates;
 using AidManager.API.SampleBounded.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Repositories;

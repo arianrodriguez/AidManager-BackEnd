@@ -1,4 +1,6 @@
-﻿namespace AidManager.API.Collaborate.Domain.Model.Entities;
+﻿using System;
+
+namespace AidManager.API.Collaborate.Domain.Model.Entities;
 
 public class Post
 {

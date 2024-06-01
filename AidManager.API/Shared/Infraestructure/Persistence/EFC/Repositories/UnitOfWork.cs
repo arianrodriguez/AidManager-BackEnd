@@ -1,4 +1,5 @@
-﻿using AidManager.API.Shared.Domain.Repositories;
+﻿using System.Threading.Tasks;
+using AidManager.API.Shared.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 
 namespace AidManager.API.Shared.Infraestructure.Persistence.EFC.Repositories;
