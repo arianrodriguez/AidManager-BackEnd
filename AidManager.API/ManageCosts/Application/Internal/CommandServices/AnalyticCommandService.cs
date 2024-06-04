@@ -1,4 +1,7 @@
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
+using AidManager.API.ManageCosts.Domain.Model.Commands;
+using AidManager.API.ManageCosts.Domain.Repositories;
+using AidManager.API.ManageCosts.Domain.Services;
 using AidManager.API.Shared.Domain.Repositories;
 
 namespace AidManager.API.ManageCosts.Application.Internal.CommandServices;

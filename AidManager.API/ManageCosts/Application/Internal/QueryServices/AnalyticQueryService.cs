@@ -1,4 +1,7 @@
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
+using AidManager.API.ManageCosts.Domain.Model.Queries;
+using AidManager.API.ManageCosts.Domain.Repositories;
+using AidManager.API.ManageCosts.Domain.Services;
 
 namespace AidManager.API.ManageCosts.Application.Internal.QueryServices;
 
@@ -7,6 +10,6 @@ public class AnalyticQueryService(IAnalyticRepository analyticRepository) :IAnal
     public async Task<Analytic> Handle(GetAnalyticByIdQuery query)
     {
         Console.WriteLine("Query service called");
-        return await analyticRepository.FindByIdAsync(query.id);
+        return await analyticRepository.FindByIdAsync(query.Id);
     }
 }
