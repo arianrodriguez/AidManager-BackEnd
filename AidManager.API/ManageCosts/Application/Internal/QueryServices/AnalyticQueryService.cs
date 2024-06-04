@@ -12,4 +12,10 @@ public class AnalyticQueryService(IAnalyticRepository analyticRepository) :IAnal
         Console.WriteLine("Query service called");
         return await analyticRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Analytic>> Handle(GetAllAnalytics query)
+    {
+        Console.WriteLine("Query service called");
+        return await analyticRepository.FindAllAsync();
+    }
 }
