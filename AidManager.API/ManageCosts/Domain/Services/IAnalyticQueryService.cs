@@ -6,4 +6,5 @@ namespace AidManager.API.ManageCosts.Domain.Services;
 public interface IAnalyticQueryService
 {
     Task<Analytic> Handle(GetAnalyticByIdQuery query);
+    Task<IEnumerable<Analytic>> Handle(GetAllAnalytics query);
 }
