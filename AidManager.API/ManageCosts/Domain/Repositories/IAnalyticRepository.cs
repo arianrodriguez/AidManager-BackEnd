@@ -5,4 +5,5 @@ namespace AidManager.API.ManageCosts.Domain.Repositories;
 public interface IAnalyticRepository : IBaseRepository<Analytic>
 {
     public Task<Analytic> CreateAnalytic(Analytic entity);
+    public Task<IEnumerable<Analytic>> FindAllAsync();
 }
