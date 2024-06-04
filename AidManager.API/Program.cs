@@ -1,4 +1,9 @@
 using System;
+using AidManager.API.ManageTasks.Application.Internal.CommandServices;
+using AidManager.API.ManageTasks.Application.Internal.QueryServices;
+using AidManager.API.ManageTasks.Domain.Repositories;
+using AidManager.API.ManageTasks.Domain.Services;
+using AidManager.API.ManageTasks.Infrastructure.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -59,6 +64,11 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 
+// Se deben agregar en programa.cs las inyecciones de dependencias para el contexto de tareas
+// Nunca olvides hacer esto en el programa principal porque sino tienes errores de inyección de dependencias
+builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
+builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
+builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
