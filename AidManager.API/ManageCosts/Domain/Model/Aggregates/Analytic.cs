@@ -1,29 +1,34 @@
+using System.Runtime.InteropServices.JavaScript;
+using AidManager.API.ManageCosts.Domain.Model.Commands;
+
 namespace AidManager.API.ManageCosts.Domain.Model.Aggregates;
 
 public class Analytic
 {
     public int Id { get; private set; }
     public string Title { get; private set; }
-    public int Cost { get; private set; }
-    public int Progress { get; private set; }
     public string Description { get; private set; }
-    
-    public Array values { get; private set; }
+    public double Cost { get; private set; }
+    public double Progress { get; private set; }
+    public int[] Current { get; private set; }
+    public int[] Expected { get; private set; }
 
     protected Analytic()
     {
         this.Title = "nothing";
-        this.Cost = 0;
-        this.Progress = 0;
         this.Description = "nothing";
-        
+        this.Cost = 0.0;
+        this.Progress = 0.0;
+        this.Current = new int[12];
+        this.Expected = new int[12];
     }
-    //
-    // public Analytic(CreateAnaliticCommand command)
-    // {
-    //     this.Title = command.Title;
-    //     this.Cost = command.Cost;
-    //     this.Progress = command.Progress;
-    //     this.Description = command.Description;
-    // }
+    public Analytic(CreateAnalyticCommand command)
+    {
+        this.Title = command.Title;
+        this.Description = command.Description;
+        this.Cost = command.Cost;
+        this.Progress = command.Progress;
+        this.Current = command.Current;
+        this.Expected = command.Expected;
+    }
 }
