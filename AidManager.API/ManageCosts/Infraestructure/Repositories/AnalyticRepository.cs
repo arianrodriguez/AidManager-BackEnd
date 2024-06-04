@@ -37,6 +37,12 @@ public class AnalyticRepository: BaseRepository<Analytic>, IAnalyticRepository
         return base.AddAsync(entity);
     }
 
+    public async Task<IEnumerable<Analytic>> FindAllAsync()
+    {
+        Console.WriteLine("find all in AnalyticRepository");
+        return await Context.Set<Analytic>().ToListAsync();
+    }
+
     public async Task<IEnumerable<Analytic>> FindByIdAsync(int Id)
     {
         Console.WriteLine("find by id in AnalyticRepository");
