@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using AidManager.API.ManageCosts.Domain.Model.Aggregates;
 using AidManager.API.ManageCosts.Domain.Model.Queries;
 using AidManager.API.ManageCosts.Domain.Services;
 using AidManager.API.ManageCosts.Interfaces.REST.Resources;
@@ -23,6 +24,16 @@ public class AnalyticsController(IAnalyticCommandService analyticCommandService,
         var resource = AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result);
         Console.WriteLine("Resource Created");
         return Ok(resource);
+    }
+    [HttpGet]
+    public async Task<IEnumerable<Analytic>> GetAllAnalytics()
+    {
+        Console.WriteLine("Get All Analytics called");
+        var getAllAnalyticsQuery = new GetAllAnalytics();
+        Console.WriteLine("Query Created");
+        var result = await analyticQueryService.Handle(getAllAnalyticsQuery);
+        Console.WriteLine("Query Handled");
+        return result;
     }
     
     [HttpPost]
