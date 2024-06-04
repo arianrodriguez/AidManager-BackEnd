@@ -1,3 +1,8 @@
+using AidManager.API.ManageCosts.Application.Internal.CommandServices;
+using AidManager.API.ManageCosts.Application.Internal.QueryServices;
+using AidManager.API.ManageCosts.Domain.Repositories;
+using AidManager.API.ManageCosts.Domain.Services;
+using AidManager.API.ManageCosts.Infraestructure.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -49,10 +54,13 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // news bounded context injection configuration DEPENDENCY INJECTION
-builder.Services.AddScoped<IBookRepository, BookRepository>();
+/*builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
-builder.Services.AddScoped<IBookQueryService, BookQueryService>();
-
+builder.Services.AddScoped<IBookQueryService, BookQueryService>();*/
+// manage-costs bounded context injection configuration DEPENDENCY INJECTION
+builder.Services.AddScoped<IAnalyticRepository, AnalyticRepository>();
+builder.Services.AddScoped<IAnalyticQueryService, AnalyticQueryService>();
+builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
