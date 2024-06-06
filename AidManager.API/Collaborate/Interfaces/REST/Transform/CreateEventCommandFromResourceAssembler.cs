@@ -7,6 +7,6 @@ public static class CreateEventCommandFromResourceAssembler
 {
     public static CreateEventCommand ToCommandFromResource(CreateEventResource resource)
     {
-        return new CreateEventCommand(resource.name, resource.date, resource.location, resource.description, resource.color);
+        return new CreateEventCommand(resource.Name, resource.Date, resource.Location, resource.Description, resource.Color, resource.PostId);
 }
 }

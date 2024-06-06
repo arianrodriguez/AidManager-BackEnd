@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.Tracing;
+using AidManager.API.Collaborate.Domain.Model.Aggregates;
 using AidManager.API.Collaborate.Domain.Model.Commands;
 using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Repositories;
@@ -10,8 +11,16 @@ public class EventCommandService(IEventRepository eventRepository) : IEventComma
 {
     public async Task<Boolean> handle(CreateEventCommand command)
     {
-        var eventEntity = new Event(command.name, command.date, command.location, command.description, command.color); 
-        var result = await eventRepository.AddAsync(eventEntity);
-        return result;
+        try
+        {
+            var eventEntity = new Event(command);
+            var result = await eventRepository.AddAsync(eventEntity);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error: " + e.Message);
+            return false;
+        }
     }
 }

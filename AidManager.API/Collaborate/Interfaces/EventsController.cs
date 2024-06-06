@@ -18,7 +18,7 @@ public class EventsController(IEventCommandService eventCommandService) : Contro
     {
         var createEventCommand = CreateEventCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await eventCommandService.handle(createEventCommand);
-        if(!result) return Ok("Event not created");
-        return Ok("Event created");
+        if(!result) return Ok(new {status_code = "500", message = "Event not created"});
+        return Ok(new {status_code = "202", message = "Event created"});
     }
 }
