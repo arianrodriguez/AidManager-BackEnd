@@ -72,6 +72,7 @@ builder.Services.AddScoped<IPostQueryService, PostQueryService>();
 // event bounded context injection configuration
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventCommandService, EventCommandService>();
+builder.Services.AddScoped<IEventQueryService, EventQueryService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
