@@ -20,4 +20,17 @@ public class EventQueryService(IEventRepository eventRepository) : IEventQuerySe
             return null;
         }
     }
+
+    public Task<IEnumerable<Event>?> handle(GetEventsByProjectId query)
+    {
+        try
+        {
+            return eventRepository.GetEventsByProjectId(query.ProjectId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error to obtain events by project id: " + e.Message);
+            return null;
+        }
+    }
 }

@@ -13,4 +13,9 @@ public class EventRepository : BaseRepository<Event>, IEventRepository
     {
     }
     
+    public async Task<IEnumerable<Event>?> GetEventsByProjectId(int projectId)
+    {
+        return await Context.Set<Event>().Where(e => e.PostId == projectId).ToListAsync();
+    }
+    
 }

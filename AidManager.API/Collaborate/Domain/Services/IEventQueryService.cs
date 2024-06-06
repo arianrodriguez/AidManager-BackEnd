@@ -7,4 +7,5 @@ namespace AidManager.API.Collaborate.Domain.Services;
 public interface IEventQueryService
 {
     Task<IEnumerable<Event>?> handle(GetAllEventsQuery query);
+    Task<IEnumerable<Event>?> handle(GetEventsByProjectId query);
 }

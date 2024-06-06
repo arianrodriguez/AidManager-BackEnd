@@ -31,4 +31,13 @@ public class EventsController(IEventCommandService eventCommandService, IEventQu
         var result = events.Select(EventResourceFromEntityAssembler.ToResourceFromEntity);
         return result;
     }
+    
+    [HttpGet("{projectId}")]
+    public async Task<IEnumerable<GetEventResource>?> GetEventsByProjectId(int projectId)
+    {
+        var events = await eventQueryService.handle(new GetEventsByProjectId(projectId));
+        if (events == null) return [];
+        var result = events.Select(EventResourceFromEntityAssembler.ToResourceFromEntity);
+        return result;
+    }
 }
