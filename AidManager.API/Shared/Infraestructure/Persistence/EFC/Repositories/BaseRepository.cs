@@ -90,6 +90,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
             try
             {
                 Context.Set<TEntity>().Remove(entity);
+                await Context.SaveChangesAsync();
                 await trans.CommitAsync();
                 Console.WriteLine("removing in BaseRepository");
                 return true;

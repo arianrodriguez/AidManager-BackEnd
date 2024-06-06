@@ -4,6 +4,8 @@ using AidManager.API.Collaborate.Domain.Model.Commands;
 using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Repositories;
 using AidManager.API.Collaborate.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
+using Mysqlx.Crud;
 
 namespace AidManager.API.Collaborate.Application.Internal.CommandServices;
 
@@ -46,4 +48,24 @@ public class EventCommandService(IEventRepository eventRepository) : IEventComma
             return false;
         }
     }
+
+    public async Task<Boolean> handle(DeleteEventCommand command)
+    {
+        try
+        {
+            var eventEntity = await eventRepository.GetEventById(command.eventId);
+            if (eventEntity == null)
+            {
+                return false;
+            }
+
+            var result = await eventRepository.Remove(eventEntity);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error removing event" + e.Message);
+            return false;
+        }
+    } 
 }

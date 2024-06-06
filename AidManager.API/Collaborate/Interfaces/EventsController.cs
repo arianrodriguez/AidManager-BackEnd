@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using AidManager.API.Collaborate.Domain.Model.Commands;
 using AidManager.API.Collaborate.Domain.Model.Queries;
 using AidManager.API.Collaborate.Domain.Services;
 using AidManager.API.Collaborate.Interfaces.REST.Resources;
@@ -48,5 +49,13 @@ public class EventsController(IEventCommandService eventCommandService, IEventQu
         var result = await eventCommandService.handle(updateEventCommand);
         if(!result) return Ok(new {status_code = "500", message = "Event not updated"});
         return Ok(new {status_code = "202", message = "Event updated"});
+    }
+
+    [HttpDelete("{eventId}")]
+    public async Task<ActionResult> DeleteEvent(int eventId)
+    {
+        var result = await eventCommandService.handle(new DeleteEventCommand(eventId));
+        if(!result) return Ok(new {status_code = "500", message = "Event not deleted"});
+        return Ok(new {status_code = "202", message = "Event deleted"});
     }
 }

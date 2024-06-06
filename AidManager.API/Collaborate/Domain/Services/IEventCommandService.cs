@@ -9,4 +9,5 @@ public interface IEventCommandService
 {
     Task<Boolean> handle(CreateEventCommand command);
     Task<Boolean> handle(EditEventCommand command);
+    Task<Boolean> handle(DeleteEventCommand command);
 }
