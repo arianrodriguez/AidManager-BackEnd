@@ -7,7 +7,6 @@ public static class CreateResourceFromEntityAssembler
 {
     public static CreateUserResource ToResourceFromEntity(User user)
     {
-        return new CreateUserResource(user.FirstName, user.LastName, user.Email, user.Password, user.ProfileImg,
-            user.Role, user.CompanyName);
+        return new CreateUserResource(user.FirstName, user.LastName, user.Age, user.Email, user.Phone, user.Occupation, user.Password, user.ProfileImg, user.Role, user.CompanyName, user.Bio);
     }
 }

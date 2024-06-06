@@ -23,6 +23,13 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
     [SwaggerResponse(201, "The user was created", typeof(CreateUserResource))]
     public async Task<IActionResult> CreateNewUser([FromBody] CreateUserResource resource)
     {
+        var query = new GetUserByEmailQuery(resource.Email);
+        var userExists = await userQueryService.FindUserByEmail(query);
+        if(userExists != null) // Mail is already in use
+        {
+            return Ok(new {message = "Mail is already in use", data = new {}});
+        }
+        
         var command = CreateUserCommandFromResourceAssembler.ToCommandFromResource(resource);
         var user = await userCommandService.Handle(command);
         if(user == null) return BadRequest();

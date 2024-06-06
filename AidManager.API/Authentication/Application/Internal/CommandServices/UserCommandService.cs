@@ -3,6 +3,7 @@ using AidManager.API.Authentication.Domain.Model.Entities;
 using AidManager.API.Authentication.Domain.Repositories;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Shared.Domain.Repositories;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AidManager.API.Authentication.Application.Internal.CommandServices;
 
@@ -10,8 +11,7 @@ public class UserCommandService(IUserRepository userRepository, IUnitOfWork unit
 {
     public async Task<User?> Handle(CreateUserCommand command)
     {
-        var user = new User(command.FirstName, command.LastName, command.Email, command.Password, command.ProfileImg,
-            command.Role, command.CompanyName);
+        var user = new User(command.FirstName, command.LastName, command.Age, command.Email, command.Phone, command.Occupation, command.Password, command.ProfileImg, command.Role, command.CompanyName, command.Bio);
         await userRepository.AddAsync(user);
         await unitOfWork.CompleteAsync();
         return user;

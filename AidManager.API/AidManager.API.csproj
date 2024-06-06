@@ -23,4 +23,7 @@
       <Folder Include="SampleBounded\Infraestructure\Persistence\EFC\" />
     </ItemGroup>
 
+    <ItemGroup>
+    </ItemGroup>
+
 </Project>
