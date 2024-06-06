@@ -5,10 +5,10 @@ namespace AidManager.API.Collaborate.Domain.Model.Entities;
 public class Event
 {
     public int Id { get; private set; }
-    public string Name { get; private set; }
+    public string Name { get; set; }
     public string Date { get; private set; }
-    public string Location { get; private set; }
-    public string Description { get; private set; }
+    public string Location { get; set; }
+    public string Description { get; set; }
     public string Color { get; private set; }
     public int PostId { get; private set; }
 

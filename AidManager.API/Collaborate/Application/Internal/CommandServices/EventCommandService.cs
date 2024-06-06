@@ -23,4 +23,27 @@ public class EventCommandService(IEventRepository eventRepository) : IEventComma
             return false;
         }
     }
+
+    public async Task<Boolean> handle(EditEventCommand command)
+    {
+        try
+        {
+            var eventEntity = await eventRepository.GetEventById(command.Id);
+            if (eventEntity == null)
+            {
+                return false;
+            }
+            
+            eventEntity.Name = command.Name;
+            eventEntity.Description = command.Description;
+            eventEntity.Location = command.Location;
+            var result = await eventRepository.Update(eventEntity);
+            return result;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error to obtain event by id" + e.Message);
+            return false;
+        }
+    }
 }

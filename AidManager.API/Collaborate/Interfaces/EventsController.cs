@@ -40,4 +40,13 @@ public class EventsController(IEventCommandService eventCommandService, IEventQu
         var result = events.Select(EventResourceFromEntityAssembler.ToResourceFromEntity);
         return result;
     }
+    
+    [HttpPut("{eventId}")]
+    public async Task<ActionResult> UpdateEvent(int eventId, [FromBody] UpdateEventResource resource)
+    {
+        var updateEventCommand = UpdateEventCommandFromResourceAssembler.ToCommandFromResource(eventId, resource);
+        var result = await eventCommandService.handle(updateEventCommand);
+        if(!result) return Ok(new {status_code = "500", message = "Event not updated"});
+        return Ok(new {status_code = "202", message = "Event updated"});
+    }
 }

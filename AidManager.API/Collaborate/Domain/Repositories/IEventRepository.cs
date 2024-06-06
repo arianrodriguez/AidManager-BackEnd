@@ -7,4 +7,5 @@ namespace AidManager.API.Collaborate.Domain.Repositories;
 public interface IEventRepository : IBaseRepository<Event>
 {
     Task<IEnumerable<Event>?> GetEventsByProjectId(int projectId);
+    Task<Event?> GetEventById(int eventId);
 }
