@@ -31,4 +31,13 @@ public class Analytic
         this.Current = command.Current;
         this.Expected = command.Expected;
     }
+    public void UpdateAnalytic(UpdateAnalyticCommand command)
+    {
+        this.Title = command.Title;
+        this.Description = command.Description;
+        this.Cost = command.Cost;
+        this.Progress = command.Progress;
+        this.Current = command.Current;
+        this.Expected = command.Expected;
+    }
 }
