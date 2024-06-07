@@ -50,4 +50,11 @@ public class AnalyticsController(IAnalyticCommandService analyticCommandService,
         return CreatedAtAction(nameof(GetAnalyticById), new { id = result.Id },
             AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateAnalytic(int id, [FromBody] UpdateAnalyticResource resource)
+    {
+        var updateTaskCommand = UpdateAnalyticCommandFromResourceAssembler.ToCommandFromResource(id, resource);
+        var result = await analyticCommandService.Handle(updateTaskCommand);
+        return Ok(AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result));
+    }
 }
