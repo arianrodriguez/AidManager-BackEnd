@@ -19,4 +19,20 @@ public class AnalyticCommandService(IAnalyticRepository analyticRepository, IUni
         Console.WriteLine("unit of work completed");
         return analytic;
     }
+
+    public async Task<Analytic> Handle(UpdateAnalyticCommand command)
+    {
+        var analytic =await analyticRepository.FindByIdAsync(command.Id);
+        Console.WriteLine("Command service Called");
+        if (analytic == null)
+        {
+            throw new Exception("Analytic not found");
+        }
+        analytic.UpdateAnalytic(command);
+        await analyticRepository.Update(analytic);
+        await unitOfWork.CompleteAsync();
+        Console.WriteLine("analytic updated in repository");
+        Console.WriteLine("unit of work completed");
+        return analytic;
+    }
 }
