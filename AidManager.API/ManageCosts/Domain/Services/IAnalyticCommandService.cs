@@ -6,4 +6,5 @@ namespace AidManager.API.ManageCosts.Domain.Services;
 public interface IAnalyticCommandService
 {
     Task<Analytic> Handle(CreateAnalyticCommand command);
+    Task<Analytic> Handle(UpdateAnalyticCommand command);
 }
