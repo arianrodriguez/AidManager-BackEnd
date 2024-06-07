@@ -1,4 +1,9 @@
 using System;
+using AidManager.API.Payment.Application.Internal.CommandServices;
+using AidManager.API.Payment.Application.Internal.QueryServices;
+using AidManager.API.Payment.Domain.Repositories;
+using AidManager.API.Payment.Domain.Services;
+using AidManager.API.Payment.Infraestructure.Persistence.EFC.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -59,6 +64,9 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 
+builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
+builder.Services.AddScoped<IPaymentDetailCommandService, PaymentDetailCommandService>();
+builder.Services.AddScoped<IPaymentDetailQueryService, PaymentDetailQueryService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();

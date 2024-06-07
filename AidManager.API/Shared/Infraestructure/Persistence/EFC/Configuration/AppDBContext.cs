@@ -1,4 +1,5 @@
-﻿using AidManager.API.SampleBounded.Domain.Model.Aggregates;
+﻿using AidManager.API.Payment.Domain.Model.Aggregates;
+using AidManager.API.SampleBounded.Domain.Model.Aggregates;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,10 @@ public class AppDBContext : DbContext
         builder.Entity<Book>().ToTable("Books");
         builder.Entity<Book>().HasKey(b => b.Id);
         builder.Entity<Book>().Property(b => b.Id).IsRequired().ValueGeneratedOnAdd();
+        
+        builder.Entity<PaymentDetail>().ToTable("PaymentDetails");
+        builder.Entity<PaymentDetail>().HasKey(p => p.Id);
+        builder.Entity<PaymentDetail>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         
         // this is to the name tables conver to snake case "LuchoPortuano" -> "lucho_portuano"
         builder.UseSnakeCaseNamingConvention();
