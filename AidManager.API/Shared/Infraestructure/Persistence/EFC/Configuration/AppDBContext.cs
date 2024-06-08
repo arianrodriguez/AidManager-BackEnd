@@ -2,6 +2,7 @@
 using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
 using AidManager.API.ManageTasks.Domain.Model.Aggregates;
+using AidManager.API.Payment.Domain.Model.Aggregates;
 using AidManager.API.SampleBounded.Domain.Model.Aggregates;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
@@ -51,5 +52,9 @@ public class AppDBContext : DbContext
         builder.Entity<TaskItem>().HasKey(t => t.Id);
         builder.Entity<TaskItem>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
         builder.UseSnakeCaseNamingConvention();
+        
+        builder.Entity<PaymentDetail>().ToTable("PaymentDetails");
+        builder.Entity<PaymentDetail>().HasKey(p => p.Id);
+        builder.Entity<PaymentDetail>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
     }
 }

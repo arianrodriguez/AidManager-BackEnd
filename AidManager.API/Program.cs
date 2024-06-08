@@ -19,6 +19,11 @@ using AidManager.API.ManageTasks.Application.Internal.QueryServices;
 using AidManager.API.ManageTasks.Domain.Repositories;
 using AidManager.API.ManageTasks.Domain.Services;
 using AidManager.API.ManageTasks.Infrastructure.Repositories;
+using AidManager.API.Payment.Application.Internal.CommandServices;
+using AidManager.API.Payment.Application.Internal.QueryServices;
+using AidManager.API.Payment.Domain.Repositories;
+using AidManager.API.Payment.Domain.Services;
+using AidManager.API.Payment.Infraestructure.Persistence.EFC.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -100,6 +105,10 @@ builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
 builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
 builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
 builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
+
+builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
+builder.Services.AddScoped<IPaymentDetailCommandService, PaymentDetailCommandService>();
+builder.Services.AddScoped<IPaymentDetailQueryService, PaymentDetailQueryService>();
 
 
 // Configure the HTTP request pipeline.
