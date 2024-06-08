@@ -1,6 +1,7 @@
 ﻿using AidManager.API.Authentication.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
+using AidManager.API.ManageTasks.Domain.Model.Aggregates;
 using AidManager.API.SampleBounded.Domain.Model.Aggregates;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
@@ -46,7 +47,9 @@ public class AppDBContext : DbContext
         builder.Entity<Analytic>().HasKey(a => a.Id);
         builder.Entity<Analytic>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
         
-        // this is to the name tables conver to snake case "LuchoPortuano" -> "lucho_portuano"
+        builder.Entity<TaskItem>().ToTable("Tasks");
+        builder.Entity<TaskItem>().HasKey(t => t.Id);
+        builder.Entity<TaskItem>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
         builder.UseSnakeCaseNamingConvention();
     }
 }

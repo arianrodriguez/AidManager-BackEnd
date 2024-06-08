@@ -14,6 +14,11 @@ using AidManager.API.ManageCosts.Application.Internal.QueryServices;
 using AidManager.API.ManageCosts.Domain.Repositories;
 using AidManager.API.ManageCosts.Domain.Services;
 using AidManager.API.ManageCosts.Infraestructure.Repositories;
+using AidManager.API.ManageTasks.Application.Internal.CommandServices;
+using AidManager.API.ManageTasks.Application.Internal.QueryServices;
+using AidManager.API.ManageTasks.Domain.Repositories;
+using AidManager.API.ManageTasks.Domain.Services;
+using AidManager.API.ManageTasks.Infrastructure.Repositories;
 using AidManager.API.SampleBounded.Application.Internal.CommandServices;
 using AidManager.API.SampleBounded.Application.Internal.QueryServices;
 using AidManager.API.SampleBounded.Domain.Repositories;
@@ -91,6 +96,11 @@ builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IAnalyticRepository, AnalyticRepository>();
 builder.Services.AddScoped<IAnalyticQueryService, AnalyticQueryService>();
 builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
+
+builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
+builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
+builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
+
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
