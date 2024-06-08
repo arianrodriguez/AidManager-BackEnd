@@ -93,5 +93,13 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
     }
     
     
+    [HttpPut("{userId}")]
+    public async Task<IActionResult> EditCompanyId(int userId, string companyId)
+    {
+        if (!await userCommandService.Handle(new EditCompanyIdCommand(userId), companyId))
+            return Ok(new { status_code = 404, message = "User not found"});
+        return Ok(new {status_code=202, message = "Company Id updated"});
+    }
+    
     
 }

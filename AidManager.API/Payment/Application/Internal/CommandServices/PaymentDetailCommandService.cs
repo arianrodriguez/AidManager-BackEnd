@@ -10,14 +10,11 @@ public class PaymentDetailCommandService(IPaymentDetailRepository paymentDetailR
 {
     public async Task<PaymentDetail> Handle(CreatePaymentDetailCommand command)
     {
-        Console.WriteLine("command service called");
         var paymentDetail = new PaymentDetail(command);
-        Console.WriteLine("payment detail Aggregate created");
-        paymentDetailRepository.CreatePaymentDetail(paymentDetail);
-        Console.WriteLine("payment detail added to repository");
+        var result = await paymentDetailRepository.CreatePaymentDetail(paymentDetail);
         await unitOfWork.CompleteAsync();
-        Console.WriteLine("unit of work completed");
-        return paymentDetail;
+        
+        return result;
     }
 
 }

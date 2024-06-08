@@ -104,6 +104,10 @@ builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
 builder.Services.AddScoped<IPaymentDetailCommandService, PaymentDetailCommandService>();
 builder.Services.AddScoped<IPaymentDetailQueryService, PaymentDetailQueryService>();
 
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyCommandService, CompanyCommandService>();
+builder.Services.AddScoped<ICompanyQueryService, CompanyQueryService>();
+
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();

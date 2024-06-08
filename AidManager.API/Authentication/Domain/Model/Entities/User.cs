@@ -41,6 +41,8 @@ public class User
     }    
     public string Password { get; private set; }
     public string ProfileImg { get; private set; }
+    
+    public string CompanyId { get; set; }
     public string Role
     {
         get => _role;
@@ -60,7 +62,7 @@ public class User
     public string Bio { get; private set; }
     
     public User(string FirstName, string LastName, int Age, string Email, string Phone, string Occupation, string Password, string ProfileImg, string Role,
-        string CompanyName, string Bio)
+        string CompanyName, string Bio, string CompanyId)
     {
         
         this.FirstName = FirstName;
@@ -74,6 +76,7 @@ public class User
         this.Role = Role;
         this.CompanyName = CompanyName;
         this.Bio = Bio;
+        this.CompanyId = CompanyId;
     }
     
     public void updateProfile(UpdateUserCommand command)
@@ -85,7 +88,7 @@ public class User
         this.Occupation = command.Occupation;
         this.ProfileImg = command.ProfileImg;
         this.Bio = command.Bio;
-    
+        this.CompanyId = command.CompanyId;
     }
     
     private void ValidateAlphabeticField(string field)

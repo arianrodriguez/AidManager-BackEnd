@@ -1,4 +1,5 @@
-﻿using AidManager.API.Authentication.Domain.Model.Entities;
+﻿using AidManager.API.Authentication.Domain.Model.Aggregates;
+using AidManager.API.Authentication.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Model.Entities;
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
 using AidManager.API.ManageTasks.Domain.Model.Aggregates;
@@ -50,5 +51,9 @@ public class AppDBContext : DbContext
         builder.Entity<PaymentDetail>().ToTable("PaymentDetails");
         builder.Entity<PaymentDetail>().HasKey(p => p.Id);
         builder.Entity<PaymentDetail>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        
+        builder.Entity<Company>().ToTable("Companies");
+        builder.Entity<Company>().HasKey(c => c.Id);
+        builder.Entity<Company>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
     }
 }

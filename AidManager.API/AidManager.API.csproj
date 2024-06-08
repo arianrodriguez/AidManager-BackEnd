@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Authentication\Domain\Model\Aggregates\" />
       <Folder Include="Authentication\Domain\Model\ValueObjects\" />
       <Folder Include="UserProfile\Application\Internal\CommandServices\" />
       <Folder Include="UserProfile\Application\Internal\QueryServices\" />

@@ -12,7 +12,7 @@ public class UserCommandService(IUserRepository userRepository, IUnitOfWork unit
 {
     public async Task<User?> Handle(CreateUserCommand command)
     {
-        var user = new User(command.FirstName, command.LastName, command.Age, command.Email, command.Phone, command.Occupation, command.Password, command.ProfileImg, command.Role, command.CompanyName, command.Bio);
+        var user = new User(command.FirstName, command.LastName, command.Age, command.Email, command.Phone, command.Occupation, command.Password, command.ProfileImg, command.Role, command.CompanyName, command.Bio, command.CompanyId);
         await userRepository.AddAsync(user);
         await unitOfWork.CompleteAsync();
         return user;
@@ -38,5 +38,20 @@ public class UserCommandService(IUserRepository userRepository, IUnitOfWork unit
         Console.WriteLine("User found in UserRepository");
         Console.WriteLine(user.Password + " == " + command.Password);
         return user.Password == command.Password;
+    }
+    
+    public async Task<bool> Handle(EditCompanyIdCommand command, string companyId)
+    {
+        var user = await userRepository.FindByIdAsync(command.UserId);
+        if (user != null)
+        {
+            user.CompanyId = companyId;
+            await userRepository.Update(user);
+            await unitOfWork.CompleteAsync();
+            return true;
+        }
+
+        return false;
+        
     }
 }
