@@ -19,7 +19,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Authentication\Domain\Model\Aggregates\" />
       <Folder Include="SampleBounded\Infraestructure\Persistence\EFC\" />
+    </ItemGroup>
+
+    <ItemGroup>
     </ItemGroup>
 
 </Project>
