@@ -4,13 +4,16 @@ using AidManager.API.Authentication.Domain.Model.Queries;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Authentication.Interfaces.REST.Resources;
 using AidManager.API.Authentication.Interfaces.REST.Transform;
+using AidManager.API.UserProfile.Interfaces.REST.Resources;
+using AidManager.API.UserProfile.Interfaces.REST.Transform;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace AidManager.API.Authentication.Interfaces;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Microsoft.AspNetCore.Mvc.Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class UsersController(IUserCommandService userCommandService, IUserQueryService userQueryService) : ControllerBase
 {
@@ -56,7 +59,7 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
     
     // users?email=...
     [HttpGet]
-    [Route("auth")]
+    [Microsoft.AspNetCore.Mvc.Route("auth")]
     [SwaggerResponse(200, "The user was obtained")]
     public async Task<IActionResult> GetUserByEmail([FromQuery] string email, string password)
     {
@@ -75,4 +78,21 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         return Ok(new {message = "Authenticated", data = user});
     }
 
+    [HttpPut]
+    public async Task<IActionResult> UpdateUser([FromQuery] string email, [FromBody] UpdateUserResource resource)
+    {
+        var query = new GetUserByEmailQuery(email);
+        var user = await userQueryService.FindUserByEmail(query);
+        if(user == null) return BadRequest();
+        
+        var command = UpdateUserCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var updatedUser = await userCommandService.Handle(command,  email);
+        if(updatedUser == null) return BadRequest();
+        
+        var userResource = CreateResourceFromEntityAssembler.ToResourceFromEntity(updatedUser);
+        return Ok(userResource);
+    }
+    
+    
+    
 }

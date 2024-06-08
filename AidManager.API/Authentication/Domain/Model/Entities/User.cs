@@ -1,4 +1,6 @@
-﻿namespace AidManager.API.Authentication.Domain.Model.Entities;
+﻿using AidManager.API.UserProfile.Domain.Model.Commands;
+
+namespace AidManager.API.Authentication.Domain.Model.Entities;
 
 public class User
 {
@@ -73,7 +75,19 @@ public class User
         this.CompanyName = CompanyName;
         this.Bio = Bio;
     }
-
+    
+    public void updateProfile(UpdateUserCommand command)
+    {
+        this.FirstName = command.FirstName;
+        this.LastName = command.LastName;
+        this.Age = command.Age;
+        this.Phone = command.Phone;
+        this.Occupation = command.Occupation;
+        this.ProfileImg = command.ProfileImg;
+        this.Bio = command.Bio;
+    
+    }
+    
     private void ValidateAlphabeticField(string field)
     {
         if (string.IsNullOrEmpty(field)) {
