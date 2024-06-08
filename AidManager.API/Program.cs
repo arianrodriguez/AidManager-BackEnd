@@ -1,4 +1,9 @@
 using System;
+using AidManager.API.Authentication.Application.Internal.CommandServices;
+using AidManager.API.Authentication.Application.Internal.QueryServices;
+using AidManager.API.Authentication.Domain.Repositories;
+using AidManager.API.Authentication.Domain.Services;
+using AidManager.API.Authentication.Infrastructure.Persistence.EFC.Repositories;
 using AidManager.API.Collaborate.Application.Internal.CommandServices;
 using AidManager.API.Collaborate.Application.Internal.QueryServices;
 using AidManager.API.Collaborate.Domain.Repositories;
@@ -73,6 +78,10 @@ builder.Services.AddScoped<IPostQueryService, PostQueryService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventCommandService, EventCommandService>();
 builder.Services.AddScoped<IEventQueryService, EventQueryService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
