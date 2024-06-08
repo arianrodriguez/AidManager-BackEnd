@@ -67,14 +67,14 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         var user = await userQueryService.FindUserByEmail(query);
         if (user == null)
         {
-            return Ok(new {message = "User not found", data = new {}});
+            return Ok(new {status_code=404, message = "User not found", data = new {}});
         }
         
         var resource = CreateUserCredentialsResourceFromEntityAssembler.ToResourceFromEntity(user, password);
         var command = CreateUserCredentialsCommandFromResourceAssembler.ToCommandFromResource(resource);
         
-        if(!await userCommandService.AuthenticateUser(command)) return Ok(new {message = "Invalid credentials", data = new {}});
-        return Ok(new {message = "Authenticated", data = user});
+        if(!await userCommandService.AuthenticateUser(command)) return Ok(new {status_code=401, message = "Invalid credentials", data = new {}});
+        return Ok(new {status_code=202,message = "Authenticated", data = user});
     }
 
     [HttpPut]

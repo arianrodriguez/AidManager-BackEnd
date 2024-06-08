@@ -71,6 +71,9 @@ builder.Services.AddDbContext<AppDBContext>(
 // configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// configure CORS
+builder.Services.AddCors();
+
 // shared bounded context injection configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -119,6 +122,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

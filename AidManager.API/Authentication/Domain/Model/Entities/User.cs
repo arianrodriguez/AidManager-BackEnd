@@ -25,7 +25,7 @@ public class User
     {
         get => _age;
         private set {
-            ValidateNumericField(value);
+            //ValidateNumericField(value);
             _age = value;
         }
     }
@@ -35,7 +35,7 @@ public class User
     {
         get => _occupation;
         private set {
-            ValidateAlphabeticField(value);
+            //ValidateAlphabeticField(value);
             _occupation = value;
         }
     }    
@@ -53,7 +53,7 @@ public class User
     {
         get => _companyName;
         private set {
-            ValidateAlphabeticField(value);
+            //ValidateAlphabeticField(value);
             _companyName = value;
         }
     }
