@@ -24,11 +24,6 @@ using AidManager.API.Payment.Application.Internal.QueryServices;
 using AidManager.API.Payment.Domain.Repositories;
 using AidManager.API.Payment.Domain.Services;
 using AidManager.API.Payment.Infraestructure.Persistence.EFC.Repositories;
-using AidManager.API.SampleBounded.Application.Internal.CommandServices;
-using AidManager.API.SampleBounded.Application.Internal.QueryServices;
-using AidManager.API.SampleBounded.Domain.Repositories;
-using AidManager.API.SampleBounded.Domain.Services;
-using AidManager.API.SampleBounded.Infraestructure.Repositories;
 using AidManager.API.Shared.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Interfaces.ASP.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
@@ -80,10 +75,6 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // news bounded context injection configuration DEPENDENCY INJECTION
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IBookCommandService, BookCommandService>();
-builder.Services.AddScoped<IBookQueryService, BookQueryService>();
-
 // post bounded context injection configuration
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IPostCommandService, PostCommandService>();

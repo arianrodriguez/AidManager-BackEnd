@@ -3,7 +3,7 @@ using AidManager.API.Authentication.Interfaces.REST.Resources;
 
 namespace AidManager.API.Authentication.Interfaces.REST.Transform;
 
-public static class CreateResourceFromEntityAssembler
+public static class CreateGetUserResourceFromEntityAssembler
 {
     public static GetUserResource ToResourceFromEntity(User user)
     {

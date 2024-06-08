@@ -30,15 +30,15 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         var userExists = await userQueryService.FindUserByEmail(query);
         if(userExists != null) // Mail is already in use
         {
-            return Ok(new {message = "Mail is already in use", data = new {}});
+            return Ok(new {status_code = 404, message = "Mail is already in use", data = new {}});
         }
         
         var command = CreateUserCommandFromResourceAssembler.ToCommandFromResource(resource);
         var user = await userCommandService.Handle(command);
         if(user == null) return BadRequest();
 
-        var userResource = CreateResourceFromEntityAssembler.ToResourceFromEntity(user);
-        return Ok(userResource);
+        var userResource = CreateGetUserResourceFromEntityAssembler.ToResourceFromEntity(user);
+        return Ok(new {status_code=202, message="User created", data=userResource});
     }
 
     [HttpGet]
@@ -67,7 +67,6 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         var user = await userQueryService.FindUserByEmail(query);
         if (user == null)
         {
-            // return the next body in the response: { "message": "User not found" }
             return Ok(new {message = "User not found", data = new {}});
         }
         

@@ -30,7 +30,6 @@
       <Folder Include="UserProfile\Domain\Repositories\" />
       <Folder Include="UserProfile\Domain\Services\" />
       <Folder Include="UserProfile\Infraestructure\Persistence\EFC\Repositories\" />
-      <Folder Include="SampleBounded\Infraestructure\Persistence\EFC\" />
     </ItemGroup>
 
     <ItemGroup>
