@@ -29,6 +29,9 @@ public class AppDBContext : DbContext
         builder.Entity<Post>().ToTable("Posts");
         builder.Entity<Post>().HasKey(p => p.Id);
         builder.Entity<Post>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Post>().Property(p => p.CreatedAt).IsRequired();
+        builder.Entity<Post>().Property(p => p.UserId).HasColumnName("user_id"); 
+        builder.Entity<Post>().HasOne(p => p.User).WithMany(u => u.Posts).HasForeignKey(p => p.UserId);
         
         // table for events
         builder.Entity<Event>().ToTable("Events");

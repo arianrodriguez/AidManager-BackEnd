@@ -18,4 +18,9 @@ public class PostQueryService(IPostRepository postRepository) : IPostQueryServic
     {
         return await postRepository.FindPostById(query.Id);
     }
+    
+    public async Task<IEnumerable<Post>?> Handle(GetAllPostsByCompanyId query)
+    {
+        return await postRepository.GetAllPostsByCompanyId(query.CompanyId);
+    }
 }

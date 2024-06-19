@@ -19,7 +19,9 @@ public class PostRepository(AppDBContext context) : BaseRepository<Post>(context
             try
             {
                 Console.WriteLine("Getting all posts in PostRepository");
-                var result = await Context.Set<Post>().ToListAsync();
+                var result = await Context.Set<Post>()
+                    .Include(p => p.User) // Carga el objeto User asociado con cada Post
+                    .ToListAsync();
                 await transaction.CommitAsync();
                 Console.WriteLine("All posts got in PostRepository");
                 return result;
@@ -31,6 +33,7 @@ public class PostRepository(AppDBContext context) : BaseRepository<Post>(context
             }
         }
     }
+
     public async Task<Post?> FindPostById(int id)
     {
         using (var transaction = Context.Database.BeginTransaction())
@@ -38,7 +41,9 @@ public class PostRepository(AppDBContext context) : BaseRepository<Post>(context
             try
             {
                 Console.WriteLine("Finding post by id in PostRepository");
-                var result = await Context.Set<Post>().FirstOrDefaultAsync(x => x.Id == id);
+                var result = await Context.Set<Post>()
+                    .Include(p => p.User)
+                    .FirstOrDefaultAsync(x => x.Id == id);
                 await transaction.CommitAsync();
                 Console.WriteLine("Post found by id in PostRepository");
                 return result;
@@ -46,6 +51,29 @@ public class PostRepository(AppDBContext context) : BaseRepository<Post>(context
             catch (Exception e)
             {
                 Console.WriteLine("Error finding post by id in PostRepository" + e.Message);
+                throw;
+            }
+        }
+    }
+
+    public async Task<IEnumerable<Post>?> GetAllPostsByCompanyId(int companyId)
+    {
+        using (var transaction = Context.Database.BeginTransaction())
+        {
+            try
+            {
+                Console.WriteLine("Getting all posts by company id in PostRepository");
+                var result = await Context.Set<Post>()
+                    .Include(p => p.User)
+                    .Where(x => x.CompanyId == companyId)
+                    .ToListAsync();
+                await transaction.CommitAsync();
+                Console.WriteLine("All posts by company id got in PostRepository");
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error getting all posts by company id in PostRepository" + e.Message);
                 throw;
             }
         }

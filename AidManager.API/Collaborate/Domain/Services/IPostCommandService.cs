@@ -8,4 +8,6 @@ public interface IPostCommandService
 {
     Task<Post?> Handle(CreatePostCommand command);
     Task<Post?> Handle(DeletePostCommand command);
+    
+    Task<Post?> Handle(UpdatePostRatingCommand command);
 }
