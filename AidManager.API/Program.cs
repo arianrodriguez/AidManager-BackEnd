@@ -1,9 +1,29 @@
 using System;
-using AidManager.API.SampleBounded.Application.Internal.CommandServices;
-using AidManager.API.SampleBounded.Application.Internal.QueryServices;
-using AidManager.API.SampleBounded.Domain.Repositories;
-using AidManager.API.SampleBounded.Domain.Services;
-using AidManager.API.SampleBounded.Infraestructure.Repositories;
+using AidManager.API.Authentication.Application.Internal.CommandServices;
+using AidManager.API.Authentication.Application.Internal.QueryServices;
+using AidManager.API.Authentication.Domain.Repositories;
+using AidManager.API.Authentication.Domain.Services;
+using AidManager.API.Authentication.Infrastructure.Persistence.EFC.Repositories;
+using AidManager.API.Collaborate.Application.Internal.CommandServices;
+using AidManager.API.Collaborate.Application.Internal.QueryServices;
+using AidManager.API.Collaborate.Domain.Repositories;
+using AidManager.API.Collaborate.Domain.Services;
+using AidManager.API.Collaborate.Infraestructure.Repositories;
+using AidManager.API.ManageCosts.Application.Internal.CommandServices;
+using AidManager.API.ManageCosts.Application.Internal.QueryServices;
+using AidManager.API.ManageCosts.Domain.Repositories;
+using AidManager.API.ManageCosts.Domain.Services;
+using AidManager.API.ManageCosts.Infraestructure.Repositories;
+using AidManager.API.ManageTasks.Application.Internal.CommandServices;
+using AidManager.API.ManageTasks.Application.Internal.QueryServices;
+using AidManager.API.ManageTasks.Domain.Repositories;
+using AidManager.API.ManageTasks.Domain.Services;
+using AidManager.API.ManageTasks.Infrastructure.Repositories;
+using AidManager.API.Payment.Application.Internal.CommandServices;
+using AidManager.API.Payment.Application.Internal.QueryServices;
+using AidManager.API.Payment.Domain.Repositories;
+using AidManager.API.Payment.Domain.Services;
+using AidManager.API.Payment.Infraestructure.Persistence.EFC.Repositories;
 using AidManager.API.Shared.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Interfaces.ASP.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
@@ -51,13 +71,42 @@ builder.Services.AddDbContext<AppDBContext>(
 // configure lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// configure CORS
+builder.Services.AddCors();
+
 // shared bounded context injection configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // news bounded context injection configuration DEPENDENCY INJECTION
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddScoped<IBookCommandService, BookCommandService>();
-builder.Services.AddScoped<IBookQueryService, BookQueryService>();
+// post bounded context injection configuration
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostCommandService, PostCommandService>();
+builder.Services.AddScoped<IPostQueryService, PostQueryService>();
+
+// event bounded context injection configuration
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IEventCommandService, EventCommandService>();
+builder.Services.AddScoped<IEventQueryService, EventQueryService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+
+builder.Services.AddScoped<IAnalyticRepository, AnalyticRepository>();
+builder.Services.AddScoped<IAnalyticQueryService, AnalyticQueryService>();
+builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
+
+builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
+builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
+builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
+
+builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
+builder.Services.AddScoped<IPaymentDetailCommandService, PaymentDetailCommandService>();
+builder.Services.AddScoped<IPaymentDetailQueryService, PaymentDetailQueryService>();
+
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyCommandService, CompanyCommandService>();
+builder.Services.AddScoped<ICompanyQueryService, CompanyQueryService>();
 
 
 // Configure the HTTP request pipeline.
@@ -77,6 +126,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
