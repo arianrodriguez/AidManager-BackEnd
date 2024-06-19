@@ -70,6 +70,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
             try
             {
                 Context.Set<TEntity>().Update(entity);
+                await Context.SaveChangesAsync();
                 await trans.CommitAsync();
                 Console.WriteLine($"updating {entity.ToString()} in BaseRepository");
                 return true;
@@ -89,6 +90,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
             try
             {
                 Context.Set<TEntity>().Remove(entity);
+                await Context.SaveChangesAsync();
                 await trans.CommitAsync();
                 Console.WriteLine("removing in BaseRepository");
                 return true;
