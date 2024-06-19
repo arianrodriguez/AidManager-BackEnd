@@ -1,4 +1,5 @@
-﻿using AidManager.API.ManageTasks.Domain.Model.Aggregates;
+﻿using System.Collections;
+using AidManager.API.ManageTasks.Domain.Model.Aggregates;
 using AidManager.API.ManageTasks.Domain.Repositories;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Configuration;
 using AidManager.API.Shared.Infraestructure.Persistence.EFC.Repositories;
@@ -32,6 +33,17 @@ public class TaskItemsRepository : BaseRepository<TaskItem>, ITaskRepository
             
         }
     }
+    
+    public Task<List<TaskItem>> GetTasksByProjectId(int projectId)
+    {
+        return Context.Set<TaskItem>().Where(f => f.ProjectId == projectId).ToListAsync();
+    }
+    
+    public Task<bool> ExistsTaskItemByProjectId(int projectId)
+    {
+        return Context.Set<TaskItem>().AnyAsync(f => f.ProjectId == projectId);
+    }
+    
     
     
     public  Task<TaskItem?> GetAllTasksByProjectId(int id)

@@ -69,6 +69,13 @@ builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
 builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
 builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
+//
+builder.Services.AddScoped<IProjectCommandService, ProjectCommandService>();
+builder.Services.AddScoped<IProjectQueryService, ProjectQueryService>();
+builder.Services.AddScoped<IProjectRepository, ProjectsRepository>();
+
+builder.Services.AddControllers();
+
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();

@@ -6,19 +6,31 @@ using AidManager.API.Shared.Domain.Repositories;
 
 namespace AidManager.API.ManageTasks.Application.Internal.CommandServices;
 
-public class TaskCommandService(ITaskRepository taskRepository, IUnitOfWork unitOfWork) : ITaskCommandService
+public class TaskCommandService(ITaskRepository taskRepository, IUnitOfWork unitOfWork, IProjectRepository projectRepository) : ITaskCommandService
 {
     public async Task<TaskItem> Handle(CreateTaskCommand command)
     {
         
-        Console.WriteLine("command service called");
+        bool exists = await projectRepository.ExistsProject(command.ProjectId);
+
+        if (!exists)
+        {
+            throw new Exception($"Project with id {command.ProjectId} does not exist.");
+        }
+        
         var task = new TaskItem(command);
-        Console.WriteLine("task Aggregate created");
-        await taskRepository.CreateTaskItem(task);
-        Console.WriteLine("task added to repository");
-        await unitOfWork.CompleteAsync();
-        Console.WriteLine("unit of work completed");
-        return task;
+        try
+        {
+            await taskRepository.AddAsync(task);
+            await unitOfWork.CompleteAsync();
+            return task;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
     
     public async Task<TaskItem> Handle(UpdateTaskCommand command)
