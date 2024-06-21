@@ -6,6 +6,7 @@ using AidManager.API.Authentication.Interfaces.REST.Resources;
 using AidManager.API.Authentication.Interfaces.REST.Transform;
 using AidManager.API.UserProfile.Interfaces.REST.Resources;
 using AidManager.API.UserProfile.Interfaces.REST.Transform;
+using Google.Protobuf;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -15,7 +16,7 @@ namespace AidManager.API.Authentication.Interfaces;
 [ApiController]
 [Microsoft.AspNetCore.Mvc.Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class UsersController(IUserCommandService userCommandService, IUserQueryService userQueryService) : ControllerBase
+public class UsersController(IUserCommandService userCommandService, IUserQueryService userQueryService, IMessageCommandService messageCommandService) : ControllerBase
 {
     [HttpPost]
     [SwaggerOperation(
@@ -107,6 +108,29 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         if (!await userCommandService.Handle(new KickUserByCompanyIdCommand(userId)))
             return Ok(new { status_code = 404, message = "User not found"});
         return Ok(new {status_code=202, message = "User kicked"});
+    }
+
+    [HttpPost("messages")]
+    [SwaggerOperation(
+        Summary = "Creates a new message",
+        Description = "Creates a new message with a given body",
+        OperationId = "CreateMessage"
+    )]
+    [SwaggerResponse(201, "The message was created", typeof(CreateMessageResource))]
+    public async Task<IActionResult> CreateNewMessage([FromBody] CreateMessageResource resource)
+    {
+        try
+        {
+            var command = CreateMessageCommandFromResourceAssembler.ToCommandFromResource(resource);
+            var message = await messageCommandService.Handle(command);
+            if (message == null) return BadRequest();
+            var messageResource = CreateMessageResourceFromEntityAssembler.ToResourceFromEntity(message);
+            return Ok(new { status_code = 201, message = "Message created", data = messageResource });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { status_code = 404, message = e.Message });
+        }
     }
     
 }
