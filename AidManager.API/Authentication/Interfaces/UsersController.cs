@@ -101,5 +101,12 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         return Ok(new {status_code=202, message = "Company Id updated"});
     }
     
+    [HttpPut("kick-member/{userId}")]
+    public async Task<IActionResult> KickUserByCompanyId(int userId)
+    {
+        if (!await userCommandService.Handle(new KickUserByCompanyIdCommand(userId)))
+            return Ok(new { status_code = 404, message = "User not found"});
+        return Ok(new {status_code=202, message = "User kicked"});
+    }
     
 }
