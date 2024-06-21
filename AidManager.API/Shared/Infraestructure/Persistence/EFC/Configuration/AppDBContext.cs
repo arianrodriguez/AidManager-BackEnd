@@ -49,6 +49,13 @@ public class AppDBContext : DbContext
         builder.Entity<TaskItem>().ToTable("Tasks");
         builder.Entity<TaskItem>().HasKey(t => t.Id);
         builder.Entity<TaskItem>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
+        
+        builder.Entity<Project>().ToTable("Projects");
+        builder.Entity<Project>().HasKey(p => p.Id);
+        builder.Entity<Project>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        
+        //Isiyisichupador
+        
         builder.UseSnakeCaseNamingConvention();
         
         builder.Entity<PaymentDetail>().ToTable("PaymentDetails");

@@ -9,15 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AidManager.API.ManageTasks.Interfaces;
 
 [ApiController]
-[Route("/Projects/{projectId}/Tasks")]
+[Route("api/v1/Projects/{projectId}/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQueryService taskQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateTaskItem([FromBody] CreateTaskItemResource resource)
+    public async Task<ActionResult> CreateTaskItem(int projectId, [FromBody] CreateTaskItemResource resource)
     {
-       
-        var createTaskItemCommand = CreateTaskItemCommandFromResourceAssembler.ToCommandFromResource(resource); 
+        var createTaskItemCommand = CreateTaskItemCommandFromResourceAssembler.ToCommandFromResource(resource, projectId); 
         Console.WriteLine("The TaskItemController is called. and the Task Item is assembled." + createTaskItemCommand);
         var result = await taskCommandService.Handle(createTaskItemCommand);
         Console.WriteLine("The Create Item Command is handled in the taskCommandService.");
@@ -56,10 +55,10 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskItemResource>>> GetAllTaskItems()
+    public async Task<ActionResult<IEnumerable<TaskItemResource>>> GetAllTaskItems(int projectId)
     {
-        var getAllTasksQuery = new GetAllTasksQuery();
-        var result = await taskQueryService.Handle(getAllTasksQuery);
+        var getAllTasksQueryByProjectId = new GetTasksByProjectIdQuery(projectId);
+        var result = await taskQueryService.Handle(getAllTasksQueryByProjectId);
         var resources = result.Select(TaskItemResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }

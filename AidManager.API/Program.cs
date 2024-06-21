@@ -99,6 +99,13 @@ builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
 builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
 builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
 builder.Services.AddScoped<ITaskQueryService, TaskQueryService>();
+//
+builder.Services.AddScoped<IProjectCommandService, ProjectCommandService>();
+builder.Services.AddScoped<IProjectQueryService, ProjectQueryService>();
+builder.Services.AddScoped<IProjectRepository, ProjectsRepository>();
+
+builder.Services.AddControllers();
+
 
 builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
 builder.Services.AddScoped<IPaymentDetailCommandService, PaymentDetailCommandService>();
