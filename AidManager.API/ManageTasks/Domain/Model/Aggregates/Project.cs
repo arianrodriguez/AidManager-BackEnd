@@ -10,11 +10,14 @@ public class Project
     
     public string ImageUrl { get; set; }
     
+    public string CompanyId { get; private set; }
+    
     public Project() { }
     public Project(CreateProjectCommand command)
     {
         this.Name = command.Name;
         this.Description = command.Description;
         this.ImageUrl = command.ImageUrl;
+        this.CompanyId = command.CompanyId;
     }
 }

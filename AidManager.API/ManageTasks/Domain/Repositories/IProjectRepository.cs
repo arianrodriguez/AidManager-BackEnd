@@ -7,4 +7,5 @@ public interface IProjectRepository : IBaseRepository<Project>
 {
     Task<bool> ExistsProject(int projectId);
     Task<bool> ExistsByName(string name);
+    Task<IEnumerable<Project>> GetAllProjectsByCompanyId(string companyId);
 }
