@@ -15,7 +15,7 @@ public static class EventResourceFromEntityAssembler
             eventEntity.Location,
             eventEntity.Description,
             eventEntity.Color,
-            eventEntity.PostId
+            eventEntity.ProjectId
         );
     }
 }

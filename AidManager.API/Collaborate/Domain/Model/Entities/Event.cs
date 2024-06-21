@@ -10,21 +10,21 @@ public class Event
     public string Location { get; set; }
     public string Description { get; set; }
     public string Color { get; private set; }
-    public int PostId { get; private set; }
+    public int ProjectId { get; private set; }
 
     public Event()
     {
         
     }
     
-    public Event(string Name, string Date, string Location, string Description, string Color, int PostId)
+    public Event(string Name, string Date, string Location, string Description, string Color, int ProjectId)
     {
         this.Name = Name;
         this.Location = Location;
         this.Description = Description;
         this.Color = Color;
         this.Date = Date;
-        this.PostId = PostId;
+        this.ProjectId = ProjectId;
     }
 
     public Event(CreateEventCommand command)
@@ -34,7 +34,7 @@ public class Event
         this.Description = command.Description;
         this.Color = command.Color;
         this.Date = command.Date;
-        this.PostId = command.PostId;
+        this.ProjectId = command.ProjectId;
     }
     
 }
