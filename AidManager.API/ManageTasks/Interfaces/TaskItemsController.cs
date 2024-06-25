@@ -31,10 +31,6 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
     public async Task<ActionResult<TaskItemResource>> GetTaskItemById(int id)
     {
         var taskItem = await taskQueryService.Handle(new GetTaskByIdQuery(id));
-        if (taskItem == null)
-        {
-            return NotFound();
-        }
         var resource = TaskItemResourceFromEntityAssembler.ToResourceFromEntity(taskItem);
         return Ok(resource);
     }
