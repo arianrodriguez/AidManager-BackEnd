@@ -6,7 +6,6 @@ namespace AidManager.API.ManageTasks.Domain.Repositories;
 
 public interface ITaskRepository : IBaseRepository<TaskItem>
 {
-    public Task<TaskItem> CreateTaskItem(TaskItem entity);
-
+    Task<List<TaskItem>> GetTasksByProjectId(int projectId);
 
 }

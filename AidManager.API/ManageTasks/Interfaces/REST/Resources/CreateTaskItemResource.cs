@@ -1,3 +1,3 @@
 ﻿namespace AidManager.API.ManageTasks.Interfaces.REST.Resources;
 
-public record CreateTaskItemResource(string Title, string Description, DateTime DueDate, int ProjectId, string State, string UserId);
+public record CreateTaskItemResource(string Title, string Description, DateTime DueDate, string State, string UserId);

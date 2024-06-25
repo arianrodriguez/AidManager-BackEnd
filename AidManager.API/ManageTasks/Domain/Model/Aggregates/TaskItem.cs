@@ -44,7 +44,6 @@ public class TaskItem
         this.Title = command.Title;
         this.Description = command.Description;
         this.DueDate = command.DueDate;
-        this.ProjectId = command.ProjectId;
         this.State = command.State;
         this.Assignee = command.Assigned;
     }
