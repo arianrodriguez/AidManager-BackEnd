@@ -10,7 +10,7 @@ public class ProjectQueryService(IProjectRepository projectRepository) :IProject
 {
     public async Task<IEnumerable<Project>> Handle(GetAllProjectsQuery query)
     {
-        return await projectRepository.ListAsync();
+        return await projectRepository.GetProjectsByCompanyId(query.CompanyId);
         
     }
 }

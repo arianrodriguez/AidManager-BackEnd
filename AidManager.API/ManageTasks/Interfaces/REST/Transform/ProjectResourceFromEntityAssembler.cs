@@ -6,5 +6,5 @@ namespace AidManager.API.ManageTasks.Interfaces.REST.Transform;
 public class ProjectResourceFromEntityAssembler
 {
     public static ProjectResource ToResourceFromEntity(Project entity) =>
-        new ProjectResource(entity.Id,entity.Name, entity.Description, entity.ImageUrl);
+        new ProjectResource(entity.Id,entity.Name, entity.Description, entity.ImageUrl, entity.CompanyId);
 }

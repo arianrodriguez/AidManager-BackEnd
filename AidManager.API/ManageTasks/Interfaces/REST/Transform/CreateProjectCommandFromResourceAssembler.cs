@@ -6,6 +6,6 @@ namespace AidManager.API.ManageTasks.Interfaces.REST.Transform;
 public class CreateProjectCommandFromResourceAssembler
 {
     public static CreateProjectCommand ToCommandFromResource(CreateProjectResource resource) =>
-        new CreateProjectCommand(resource.Name, resource.Description, resource.ImageUrl);
+        new CreateProjectCommand(resource.Name, resource.Description, resource.ImageUrl, resource.CompanyId);
 
 }

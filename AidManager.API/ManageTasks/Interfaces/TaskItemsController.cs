@@ -20,14 +20,14 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
         Console.WriteLine("The TaskItemController is called. and the Task Item is assembled." + createTaskItemCommand);
         var result = await taskCommandService.Handle(createTaskItemCommand);
         Console.WriteLine("The Create Item Command is handled in the taskCommandService.");
-        var taskItemById = this.GetTaskItemById(result.Id);
+        var taskItemById = GetTaskItemById(result.Id);
         Console.WriteLine("Task by id called" + taskItemById.Result);
-        return CreatedAtAction(nameof(GetTaskItemById), new { id = result.Id }, 
+        return CreatedAtAction(nameof(GetTaskItemById), new {projectId = projectId, id = result.Id }, 
             TaskItemResourceFromEntityAssembler.ToResourceFromEntity(result));
         
     }
     
-    [HttpGet("/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<TaskItemResource>> GetTaskItemById(int id)
     {
         var taskItem = await taskQueryService.Handle(new GetTaskByIdQuery(id));
@@ -46,7 +46,7 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
         var result = await taskCommandService.Handle(updateTaskCommand);
         return Ok(TaskItemResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
-    [HttpDelete("/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteTaskItem(int id)
     {
         var deleteTaskItemCommand = new DeleteTaskCommand(id);
