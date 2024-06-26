@@ -16,4 +16,9 @@ public class TaskQueryService(ITaskRepository taskRepository) : ITaskQueryServic
     {
         return await taskRepository.FindByIdAsync(query.Id);
     }
+    
+    public async Task<List<TaskItem>> Handle(GetTasksByProjectIdQuery query)
+    {
+        return await taskRepository.GetTasksByProjectId(query.ProjectId);
+    }
 }

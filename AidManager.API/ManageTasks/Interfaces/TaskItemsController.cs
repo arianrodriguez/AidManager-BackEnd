@@ -9,33 +9,28 @@ using Microsoft.AspNetCore.Mvc;
 namespace AidManager.API.ManageTasks.Interfaces;
 
 [ApiController]
-[Route("/Projects/{projectId}/Tasks")]
+[Route("api/v1/Projects/{projectId}/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQueryService taskQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateTaskItem([FromBody] CreateTaskItemResource resource)
+    public async Task<ActionResult> CreateTaskItem(int projectId, [FromBody] CreateTaskItemResource resource)
     {
-       
-        var createTaskItemCommand = CreateTaskItemCommandFromResourceAssembler.ToCommandFromResource(resource); 
+        var createTaskItemCommand = CreateTaskItemCommandFromResourceAssembler.ToCommandFromResource(resource, projectId); 
         Console.WriteLine("The TaskItemController is called. and the Task Item is assembled." + createTaskItemCommand);
         var result = await taskCommandService.Handle(createTaskItemCommand);
         Console.WriteLine("The Create Item Command is handled in the taskCommandService.");
-        var taskItemById = this.GetTaskItemById(result.Id);
+        var taskItemById = GetTaskItemById(result.Id);
         Console.WriteLine("Task by id called" + taskItemById.Result);
-        return CreatedAtAction(nameof(GetTaskItemById), new { id = result.Id }, 
+        return CreatedAtAction(nameof(GetTaskItemById), new {projectId = projectId, id = result.Id }, 
             TaskItemResourceFromEntityAssembler.ToResourceFromEntity(result));
         
     }
     
-    [HttpGet("/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<TaskItemResource>> GetTaskItemById(int id)
     {
         var taskItem = await taskQueryService.Handle(new GetTaskByIdQuery(id));
-        if (taskItem == null)
-        {
-            return NotFound();
-        }
         var resource = TaskItemResourceFromEntityAssembler.ToResourceFromEntity(taskItem);
         return Ok(resource);
     }
@@ -47,7 +42,7 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
         var result = await taskCommandService.Handle(updateTaskCommand);
         return Ok(TaskItemResourceFromEntityAssembler.ToResourceFromEntity(result));
     }
-    [HttpDelete("/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteTaskItem(int id)
     {
         var deleteTaskItemCommand = new DeleteTaskCommand(id);
@@ -56,10 +51,10 @@ public class TaskItemsController(ITaskCommandService taskCommandService, ITaskQu
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskItemResource>>> GetAllTaskItems()
+    public async Task<ActionResult<IEnumerable<TaskItemResource>>> GetAllTaskItems(int projectId)
     {
-        var getAllTasksQuery = new GetAllTasksQuery();
-        var result = await taskQueryService.Handle(getAllTasksQuery);
+        var getAllTasksQueryByProjectId = new GetTasksByProjectIdQuery(projectId);
+        var result = await taskQueryService.Handle(getAllTasksQueryByProjectId);
         var resources = result.Select(TaskItemResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }
