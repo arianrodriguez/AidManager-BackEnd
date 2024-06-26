@@ -1,60 +1,132 @@
-﻿using System.Net.Mime;
-using AidManager.API.ManageCosts.Domain.Model.Aggregates;
+using System.Net.Mime;
 using AidManager.API.ManageCosts.Domain.Model.Queries;
 using AidManager.API.ManageCosts.Domain.Services;
 using AidManager.API.ManageCosts.Interfaces.REST.Resources;
 using AidManager.API.ManageCosts.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AidManager.API.ManageCosts.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class AnalyticsController(IAnalyticCommandService analyticCommandService, IAnalyticQueryService analyticQueryService): ControllerBase
+public class AnalyticsController(
+    IAnalyticsCommandService analyticsCommandService,
+    IAnalyticsQueryService analyticsQueryService
+    ) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<ActionResult> GetAnalyticById(int id)
-    {
-        Console.WriteLine("Get Analytic By Id called");
-        var getAnalyticByIdQuery = new GetAnalyticByIdQuery(id);
-        Console.WriteLine("Query Created");
-        var result = await analyticQueryService.Handle(getAnalyticByIdQuery);
-        Console.WriteLine("Query Handled");
-        var resource = AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result);
-        Console.WriteLine("Resource Created");
-        return Ok(resource);
-    }
-    [HttpGet]
-    public async Task<IEnumerable<Analytic>> GetAllAnalytics()
-    {
-        Console.WriteLine("Get All Analytics called");
-        var getAllAnalyticsQuery = new GetAllAnalytics();
-        Console.WriteLine("Query Created");
-        var result = await analyticQueryService.Handle(getAllAnalyticsQuery);
-        Console.WriteLine("Query Handled");
-        return result;
-    }
     
     [HttpPost]
-    public async Task<ActionResult> CreateAnalytic([FromBody] CreateAnalyticResource resource)
+    [SwaggerResponse(201, "Analytics created", typeof(CreateAnalyticsResource))]
+    public async Task<IActionResult> CreateNewAnalytics([FromBody] CreateAnalyticsResource resource)
     {
-        Console.WriteLine("Create Analytic called");
-        var createAnalyticCommand = CreateAnalyticCommandFromResourceAssembler.ToCommandFromResource(resource);
-        Console.WriteLine("Command Created");
-        var result = await analyticCommandService.Handle(createAnalyticCommand);
+        var command = CreateAnalyticsCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var analytic = await analyticsCommandService.Handle(command);
         
-        var analyticById = this.GetAnalyticById(result.Id);
-        Console.WriteLine("Analytic By Id called" + analyticById.Result.ToString());
+        if (analytic == null)
+        {
+            return NotFound();
+        }
         
-        return CreatedAtAction(nameof(GetAnalyticById), new { id = result.Id },
-            AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result));
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
     }
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateAnalytic(int id, [FromBody] UpdateAnalyticResource resource)
+    
+    [HttpGet("{projectId}")]
+    [SwaggerResponse(200, "Analytics found", typeof(AnalyticsResource))]
+    public async Task<IActionResult> GetAnalyticsByProjectId([FromRoute] int projectId)
     {
-        var updateTaskCommand = UpdateAnalyticCommandFromResourceAssembler.ToCommandFromResource(id, resource);
-        var result = await analyticCommandService.Handle(updateTaskCommand);
-        return Ok(AnalyticResourceFromEntityAssembler.ToResourceFromEntity(result));
+        var query = new GetAnalyticsByProjectId(projectId);
+        var analytic = await analyticsQueryService.Handle(query);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
     }
+    
+    [HttpPatch("payments")]
+    [SwaggerResponse(200, "Analytics updated", typeof(UpdateAnalyticPaymentsResource))]
+    public async Task<IActionResult> UpdateAnalyticPayments([FromBody] UpdateAnalyticPaymentsResource resource)
+    {
+        var command = UpdateAnalyticPaymentCommandFromResourceAssembler.ToCommandFromResource(resource.Id, resource);
+        var analytic = await analyticsCommandService.Handle(command);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
+    }
+    
+    [HttpPatch("lines")]
+    [SwaggerResponse(200, "Analytics updated", typeof(UpdateAnalyticLinesResource))]
+    public async Task<IActionResult> UpdateAnalyticLines([FromBody] UpdateAnalyticLinesResource resource)
+    {
+        var command = UpdateAnalyticLinesCommandFromResourceAssembler.ToCommandFromResource(resource.Id, resource);
+        var analytic = await analyticsCommandService.Handle(command);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
+    }
+    
+    [HttpPatch("tasks")]
+    [SwaggerResponse(200, "Analytics updated", typeof(UpdateAnalyticTasksResource))]
+    public async Task<IActionResult> UpdateAnalyticTasks([FromBody] UpdateAnalyticTasksResource resource)
+    {
+        var command = UpdateAnalyticTasksCommandFromResourceAssembler.ToCommandFromResource(resource.Id, resource);
+        var analytic = await analyticsCommandService.Handle(command);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
+    }
+    
+    [HttpPatch("progressbar")]
+    [SwaggerResponse(200, "Analytics updated", typeof(UpdateAnalyticProgressbarResource))]
+    public async Task<IActionResult> UpdateAnalyticProgressbar([FromBody] UpdateAnalyticProgressbarResource resource)
+    {
+        var command = UpdateAnalyticProgressbarCommandFromResourceAssembler.ToCommandFromResource(resource.Id, resource);
+        var analytic = await analyticsCommandService.Handle(command);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
+    }
+    
+    [HttpPatch("status")]
+    [SwaggerResponse(200, "Analytics updated", typeof(UpdateAnalyticStatusResource))]
+    public async Task<IActionResult> UpdateAnalyticStatus([FromBody] UpdateAnalyticStatusResource resource)
+    {
+        var command = UpdateAnalyticStatusCommandFromResourceAssembler.ToCommandFromResource(resource.Id, resource);
+        var analytic = await analyticsCommandService.Handle(command);
+        
+        if (analytic == null)
+        {
+            return NotFound();
+        }
+        
+        var analyticResource = AnalyticsResourceFromEntityAssembler.ToResourceFromEntity(analytic);
+        return Ok(analyticResource);
+    }
+    
 }

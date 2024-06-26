@@ -92,9 +92,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
-builder.Services.AddScoped<IAnalyticRepository, AnalyticRepository>();
-builder.Services.AddScoped<IAnalyticQueryService, AnalyticQueryService>();
-builder.Services.AddScoped<IAnalyticCommandService, AnalyticCommandService>();
+// analytics bounded context injection configuration
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+builder.Services.AddScoped<IAnalyticsCommandService, AnalyticsCommandService>();
+builder.Services.AddScoped<IAnalyticsQueryService, AnalyticsQueryService>();
 
 builder.Services.AddScoped<ITaskRepository, TaskItemsRepository>();
 builder.Services.AddScoped<ITaskCommandService, TaskCommandService>();
