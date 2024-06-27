@@ -9,5 +9,5 @@ public interface IPostRepository : IBaseRepository<Post>
 {
     Task<Post?> FindPostById(int id);
     Task<IEnumerable<Post>?> GetAllPosts();
-    Task<IEnumerable<Post>?> GetAllPostsByCompanyId(string companyId);
+    Task<IEnumerable<Post>?> GetAllPostsByCompanyId(int companyId);
 }

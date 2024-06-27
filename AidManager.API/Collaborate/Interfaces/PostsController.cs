@@ -26,21 +26,13 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
     [SwaggerResponse(201, "Post created", typeof(CreatePostResource))]
     public async Task<IActionResult> CreateNewPost([FromBody] CreatePostResource resource)
     {
-        try
-        {
-            var command = CreatePostCommandFromResourceAssembler.ToCommandFromResource(resource);
-            var post = await postCommandService.Handle(command);
+        var command = CreatePostCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var post = await postCommandService.Handle(command);
 
-            if (post == null) return BadRequest();
-
-            var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
-            return Ok(postResource);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (post == null) return BadRequest();
         
+        var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
+        return Ok(postResource);
     }
     
     // obtain all posts
@@ -53,21 +45,13 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
     [SwaggerResponse(200, "The posts were found")]
     public async Task<IActionResult> GetAllPosts()
     {
-        try
-        {
-            var query = new GetAllPostsQuery();
-            var posts = await postQueryService.Handle(query);
+        var query = new GetAllPostsQuery();
+        var posts = await postQueryService.Handle(query);
 
-            if (posts == null) return BadRequest();
-
-            var postResources = posts.Select(PostResourceFromEntityAssembler.ToResourceFromEntity);
-            return Ok(postResources);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (posts == null) return BadRequest();
         
+        var postResources = posts.Select(PostResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(postResources);
     }
     
     // obtain post by id
@@ -80,21 +64,13 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
     [SwaggerResponse(200, "The post was found", typeof(CreatePostResource))]
     public async Task<IActionResult> GetPostById([FromRoute] int id)
     {
-        try
-        {
-            var query = new GetPostById(id);
-            var post = await postQueryService.Handle(query);
+        var query = new GetPostById(id);
+        var post = await postQueryService.Handle(query);
 
-            if (post == null) return NotFound();
-
-            var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
-            return Ok(postResource);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (post == null) return NotFound();
         
+        var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
+        return Ok(postResource);
     }
     
     // delete post by id
@@ -107,21 +83,13 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
     [SwaggerResponse(200, "The post was deleted", typeof(CreatePostResource))]
     public async Task<IActionResult> DeletePostById([FromRoute] int id)
     {
-        try
-        {
-            var command = new DeletePostCommand(id);
-            var post = await postCommandService.Handle(command);
+        var command = new DeletePostCommand(id);
+        var post = await postCommandService.Handle(command);
 
-            if (post == null) return NotFound();
-
-            var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
-            return Ok(postResource);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (post == null) return NotFound();
         
+        var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
+        return Ok(postResource);
     }
     
     // get all posts by company id
@@ -132,23 +100,15 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
         OperationId = "GetAllPostsByCompanyId"
     )]
     [SwaggerResponse(200, "The posts by company id were found", typeof(CreatePostResource))]
-    public async Task<IActionResult> GetAllPostsByCompanyId([FromRoute] string companyId)
+    public async Task<IActionResult> GetAllPostsByCompanyId([FromRoute] int companyId)
     {
-        try
-        {
-            var query = new GetAllPostsByCompanyId(companyId);
-            var posts = await postQueryService.Handle(query);
+        var query = new GetAllPostsByCompanyId(companyId);
+        var posts = await postQueryService.Handle(query);
 
-            if (posts == null) return NotFound();
-
-            var postResources = posts.Select(PostResourceFromEntityAssembler.ToResourceFromEntity);
-            return Ok(postResources);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (posts == null) return NotFound();
         
+        var postResources = posts.Select(PostResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(postResources);
     }
     
     // update rating field of post by id
@@ -161,21 +121,13 @@ public class PostsController(IPostCommandService postCommandService, IPostQueryS
     [SwaggerResponse(200, "The post rating was updated", typeof(CreatePostResource))]
     public async Task<IActionResult> UpdatePostRating([FromRoute] int id, [FromBody] UpdatePostRatingResource resource)
     {
-        try
-        {
-            var command = UpdatePostRatingCommandFromResourceAssembler.ToCommandFromResource(id, resource);
-            var post = await postCommandService.Handle(command);
+        var command = UpdatePostRatingCommandFromResourceAssembler.ToCommandFromResource(id, resource);
+        var post = await postCommandService.Handle(command);
 
-            if (post == null) return NotFound();
-
-            var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
-            return Ok(postResource);
-        }
-        catch (Exception e)
-        {
-            return BadRequest("Error: " + e.Message);
-        }
+        if (post == null) return NotFound();
         
+        var postResource = PostResourceFromEntityAssembler.ToResourceFromEntity(post);
+        return Ok(postResource);
     }
     
     

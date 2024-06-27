@@ -15,7 +15,7 @@ public class Post
     public DateTime CreatedAt { get; private set; }
     public int Rating { get; set; } // don't use private set here, because we want to update it
     
-    public string CompanyId { get; private set; }
+    public int CompanyId { get; private set; }
     
     [ForeignKey("UserId")]
     public int UserId { get; private set; }
