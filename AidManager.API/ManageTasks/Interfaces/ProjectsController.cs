@@ -11,8 +11,7 @@ namespace AidManager.API.ManageTasks.Interfaces.REST;
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class ProjectsController(IProjectCommandService projectCommandService, IProjectQueryService projectQueryService)
-    : ControllerBase
+public class ProjectsController (IProjectCommandService projectCommandService, IProjectQueryService projectQueryService) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateProject(CreateProjectResource resource)
@@ -22,28 +21,14 @@ public class ProjectsController(IProjectCommandService projectCommandService, IP
         var projectResource = ProjectResourceFromEntityAssembler.ToResourceFromEntity(project);
         return Ok(projectResource);
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetAllProjects()
+    
+    [HttpGet("{companyId}")]
+    public async Task<IActionResult> GetAllProjects(string companyId)
     {
-        var projects = await projectQueryService.Handle(new GetAllProjectsQuery());
+        var projects = await projectQueryService.Handle(new GetAllProjectsQuery(companyId));
         var projectResources = projects.Select(ProjectResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(projectResources);
     }
-
-    [HttpGet("{companyId}")]
-    public async Task<IActionResult> GetProjectsByCompanyId([FromRoute] string companyId)
-    {
-        try
-        {
-            var projects = await projectQueryService.Handle(new GetAllProjectsByCompanyIdQuery(companyId));
-            var projectResources = projects.Select(ProjectResourceFromEntityAssembler.ToResourceFromEntity);
-            return Ok(projectResources);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-
+    
+    
 }

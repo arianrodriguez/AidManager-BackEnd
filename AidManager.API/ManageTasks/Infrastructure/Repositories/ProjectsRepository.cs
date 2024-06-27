@@ -20,9 +20,11 @@ public class ProjectsRepository : BaseRepository<Project>, IProjectRepository
         return Context.Set<Project>().AnyAsync(f => f.Name == name);
     }
     
-    public async Task<IEnumerable<Project>> GetAllProjectsByCompanyId(string companyId)
+    public Task<List<Project>> GetProjectsByCompanyId(string companyId)
     {
-        return await Context.Set<Project>().Where(f => f.CompanyId == companyId).ToListAsync();
+        return Context.Set<Project>().Where(f => f.CompanyId == companyId).ToListAsync();
+
     }
+    
     
 }

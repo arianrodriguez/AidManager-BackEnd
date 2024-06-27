@@ -10,8 +10,7 @@ public class Project
     
     public string ImageUrl { get; set; }
     
-    public string CompanyId { get; private set; }
-    
+    public string CompanyId { get; set; }
     public Project() { }
     public Project(CreateProjectCommand command)
     {
