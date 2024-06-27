@@ -5,6 +5,6 @@ public record CreatePostCommand(
     string Subject,
     string Description,
     int Rating,
-    int CompanyId,
+    string CompanyId,
     int UserId
 );
