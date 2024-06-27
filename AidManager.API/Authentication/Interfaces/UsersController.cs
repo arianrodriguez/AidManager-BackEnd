@@ -133,4 +133,15 @@ public class UsersController(IUserCommandService userCommandService, IUserQueryS
         }
     }
     
+    [HttpPatch("company-name")]
+    public async Task<IActionResult> UpdateUserCompanyName([FromBody] UpdateUserCompanyNameResource resource)
+    {
+        var command = UpdateUserCompanyNameCommandFromResourceAssembler.ToCommandFromResource(resource.UserId, resource);
+        var user = await userCommandService.Handle(command);
+        if (user == null) return BadRequest();
+        var userResource = CreateResourceFromEntityAssembler.ToResourceFromEntity(user);
+        return Ok(userResource);
+    }
+    
+    
 }

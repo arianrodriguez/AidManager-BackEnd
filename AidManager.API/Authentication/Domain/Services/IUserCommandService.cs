@@ -11,4 +11,5 @@ public interface IUserCommandService
     Task<bool> AuthenticateUser(ValidateUserCredentialsCommand command);
     Task<bool> Handle(EditCompanyIdCommand command, string companyId);
     Task<bool> Handle(KickUserByCompanyIdCommand command);
+    Task<User?> Handle(UpdateUserCompanyNameCommand command);
 }

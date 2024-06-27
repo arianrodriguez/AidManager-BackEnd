@@ -68,4 +68,18 @@ public class UserCommandService(IUserRepository userRepository, IUnitOfWork unit
 
         return false;
     }
+    
+    public async Task<User?> Handle(UpdateUserCompanyNameCommand command)
+    {
+        var user = await userRepository.FindByIdAsync(command.UserId);
+        if (user != null)
+        {
+            user.CompanyName = command.CompanyName;
+            await userRepository.Update(user);
+            await unitOfWork.CompleteAsync();
+            return user;
+        }
+
+        return null;
+    }
 }

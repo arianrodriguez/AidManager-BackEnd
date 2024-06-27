@@ -52,14 +52,7 @@ public class User
             _role = value;
         }
     }
-    public string CompanyName
-    {
-        get => _companyName;
-        private set {
-            //ValidateAlphabeticField(value);
-            _companyName = value;
-        }
-    }
+    public string CompanyName {get; set;}
     public string Bio { get; private set; }
     
     public ICollection<Post> Posts { get; set; }
