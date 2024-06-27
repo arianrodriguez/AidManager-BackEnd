@@ -42,9 +42,10 @@ public class AppDBContext : DbContext
         builder.Entity<User>().HasKey(u => u.Id);
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
         
-        builder.Entity<Analytic>().ToTable("Analytics");
-        builder.Entity<Analytic>().HasKey(a => a.Id);
-        builder.Entity<Analytic>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
+        // table for analytics
+        builder.Entity<Analytics>().ToTable("Analytics");
+        builder.Entity<Analytics>().HasKey(a => a.Id);
+        builder.Entity<Analytics>().Property(a => a.Id).IsRequired().ValueGeneratedOnAdd();
         
         builder.Entity<TaskItem>().ToTable("Tasks");
         builder.Entity<TaskItem>().HasKey(t => t.Id);
