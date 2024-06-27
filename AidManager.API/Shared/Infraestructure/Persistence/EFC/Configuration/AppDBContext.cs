@@ -62,5 +62,8 @@ public class AppDBContext : DbContext
         builder.Entity<Company>().ToTable("Companies");
         builder.Entity<Company>().HasKey(c => c.Id);
         builder.Entity<Company>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+
+        builder.Entity<Message>().ToTable("Messages");
+        builder.Entity<Message>().HasKey(m => m.Id);
     }
 }

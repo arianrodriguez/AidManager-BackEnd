@@ -4,6 +4,7 @@ using AidManager.API.Authentication.Application.Internal.QueryServices;
 using AidManager.API.Authentication.Domain.Repositories;
 using AidManager.API.Authentication.Domain.Services;
 using AidManager.API.Authentication.Infrastructure.Persistence.EFC.Repositories;
+using AidManager.API.Authentication.Interfaces.REST.Resources;
 using AidManager.API.Collaborate.Application.Internal.CommandServices;
 using AidManager.API.Collaborate.Application.Internal.QueryServices;
 using AidManager.API.Collaborate.Domain.Repositories;
@@ -114,6 +115,9 @@ builder.Services.AddScoped<IPaymentDetailQueryService, PaymentDetailQueryService
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyCommandService, CompanyCommandService>();
 builder.Services.AddScoped<ICompanyQueryService, CompanyQueryService>();
+
+builder.Services.AddScoped<IMessageCommandService, MessageCommandService>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 
 // Configure the HTTP request pipeline.
