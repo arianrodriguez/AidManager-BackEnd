@@ -56,7 +56,7 @@ public class PostRepository(AppDBContext context) : BaseRepository<Post>(context
         }
     }
 
-    public async Task<IEnumerable<Post>?> GetAllPostsByCompanyId(int companyId)
+    public async Task<IEnumerable<Post>?> GetAllPostsByCompanyId(string companyId)
     {
         using (var transaction = Context.Database.BeginTransaction())
         {
