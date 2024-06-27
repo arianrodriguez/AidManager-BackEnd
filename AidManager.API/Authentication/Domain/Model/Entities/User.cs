@@ -1,4 +1,5 @@
-﻿using AidManager.API.UserProfile.Domain.Model.Commands;
+﻿using AidManager.API.Collaborate.Domain.Model.Entities;
+using AidManager.API.UserProfile.Domain.Model.Commands;
 
 namespace AidManager.API.Authentication.Domain.Model.Entities;
 
@@ -60,6 +61,8 @@ public class User
         }
     }
     public string Bio { get; private set; }
+    
+    public ICollection<Post> Posts { get; set; }
     
     public User(string FirstName, string LastName, int Age, string Email, string Phone, string Occupation, string Password, string ProfileImg, string Role,
         string CompanyName, string Bio, string CompanyId)

@@ -7,13 +7,14 @@ public class PostAggregate
 {
     public Post post { get; private set; }
     
-    // guid keyword it uses to generate a new GUID value for the AuthorId property
-    //public Guid AuthorId { get; private set; }
-    
-    /*public PostAggregate(Post post, User author)
+    public PostAggregate()
     {
-        Post = post;
-        Author = author;
-    }*/
+        this.post = new Post();
+    }
+    
+    public PostAggregate(Post post)
+    {
+        this.post = post;
+    }
     
 }

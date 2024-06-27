@@ -7,6 +7,13 @@ public static class CreatePostCommandFromResourceAssembler
 {
     public static CreatePostCommand ToCommandFromResource(CreatePostResource resource)
     {
-        return new CreatePostCommand(resource.Title, resource.Description, resource.Rating, resource.UserId);
+        return new CreatePostCommand(
+            resource.Title, 
+            resource.Subject,
+            resource.Description, 
+            resource.Rating, 
+            resource.CompanyId,
+            resource.UserId
+        );
     }    
 }

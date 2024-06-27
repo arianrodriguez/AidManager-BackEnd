@@ -6,4 +6,6 @@ namespace AidManager.API.Authentication.Domain.Repositories;
 public interface IUserRepository : IBaseRepository<User>
 {
     Task<User?> FindUserByEmail(string email);
+    
+    Task<User?> FindUserById(int id);
 }
