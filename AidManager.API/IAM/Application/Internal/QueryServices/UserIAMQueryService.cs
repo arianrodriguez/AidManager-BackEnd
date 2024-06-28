@@ -1,4 +1,5 @@
-﻿using AidManager.API.IAM.Domain.Model.Aggregates;
+﻿using AidManager.API.Authentication.Domain.Model.Entities;
+using AidManager.API.IAM.Domain.Model.Aggregates;
 using AidManager.API.IAM.Domain.Model.Queries;
 using AidManager.API.IAM.Domain.Repositories;
 using AidManager.API.IAM.Domain.Services;
@@ -10,5 +11,15 @@ public class UserIAMQueryService(IUserIAMRepository userRepository) : IUserIAMQu
     public async Task<UserAuth?> Handle(GetUserIAMByIdQuery query)
     {
         return await userRepository.FindByIdAsync(query.Id);
+    }
+    
+    public async Task<UserAuth?> Handle(GetUserIAMByUsernameQuery query)
+    {
+        return await userRepository.FindByUsernameAsync(query.Username);
+    }
+
+    public async Task<IEnumerable<UserAuth>> Handle(GetAllUsersIAMQuery query)
+    {
+        return await userRepository.ListAsync();
     }
 }

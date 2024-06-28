@@ -24,7 +24,6 @@
 
     <ItemGroup>
       <Folder Include="Authentication\Domain\Model\ValueObjects\" />
-      <Folder Include="IAM\Interfaces\ACL\" />
       <Folder Include="UserProfile\Application\Internal\CommandServices\" />
       <Folder Include="UserProfile\Application\Internal\QueryServices\" />
       <Folder Include="UserProfile\Domain\Model\Aggregates\" />
