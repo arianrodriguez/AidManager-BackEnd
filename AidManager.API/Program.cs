@@ -10,6 +10,16 @@ using AidManager.API.Collaborate.Application.Internal.QueryServices;
 using AidManager.API.Collaborate.Domain.Repositories;
 using AidManager.API.Collaborate.Domain.Services;
 using AidManager.API.Collaborate.Infraestructure.Repositories;
+using AidManager.API.IAM.Application.Internal.CommandServices;
+using AidManager.API.IAM.Application.Internal.OutboundServices;
+using AidManager.API.IAM.Application.Internal.QueryServices;
+using AidManager.API.IAM.Domain.Repositories;
+using AidManager.API.IAM.Domain.Services;
+using AidManager.API.IAM.Infrastructure.Hashing.BCrypt.Services;
+using AidManager.API.IAM.Infrastructure.Persistence.EFC.Repositories;
+using AidManager.API.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+using AidManager.API.IAM.Infrastructure.Tokens.JWT.Configuration;
+using AidManager.API.IAM.Infrastructure.Tokens.JWT.Services;
 using AidManager.API.ManageCosts.Application.Internal.CommandServices;
 using AidManager.API.ManageCosts.Application.Internal.QueryServices;
 using AidManager.API.ManageCosts.Domain.Repositories;
@@ -35,6 +45,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +58,51 @@ builder.Services.AddControllers(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    c =>
+    {
+        c.SwaggerDoc("v1",
+            new OpenApiInfo
+            {
+                Title = "AidManager API Endpoints",
+                Version = "v1",
+                Description = "AidManager API Endpoints for managing tasks, costs, payments, and collaboration",
+                TermsOfService = new Uri("https://aidmanager.com/tos"),
+                Contact = new OpenApiContact
+                {
+                    Name = "Y.E.S.I Team",
+                    Email = "contact@yesis.com"
+                },
+                License = new OpenApiLicense
+                {
+                    Name = "Apache 2.0",
+                    Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+                }
+            });
+        c.EnableAnnotations();
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please enter token",
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = "bearer"
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer", Type = ReferenceType.SecurityScheme
+                    } 
+                }, 
+                Array.Empty<string>()
+            }
+        });
+    });
 
 // adding database connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -120,6 +175,12 @@ builder.Services.AddScoped<ICompanyQueryService, CompanyQueryService>();
 builder.Services.AddScoped<IMessageCommandService, MessageCommandService>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.AddScoped<IUserIAMRepository, UserIAMRepository>();
+builder.Services.AddScoped<IUserIAMCommandService, UserIAMCommandService>();
+builder.Services.AddScoped<IUserIAMQueryService, UserIAMQueryService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
@@ -143,6 +204,9 @@ app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
+
+// Add authorization middleware to pipeline
+app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

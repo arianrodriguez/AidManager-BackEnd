@@ -1,6 +1,7 @@
 ﻿using AidManager.API.Authentication.Domain.Model.Aggregates;
 using AidManager.API.Authentication.Domain.Model.Entities;
 using AidManager.API.Collaborate.Domain.Model.Entities;
+using AidManager.API.IAM.Domain.Model.Aggregates;
 using AidManager.API.ManageCosts.Domain.Model.Aggregates;
 using AidManager.API.ManageTasks.Domain.Model.Aggregates;
 using AidManager.API.Payment.Domain.Model.Aggregates;
@@ -55,9 +56,6 @@ public class AppDBContext : DbContext
         builder.Entity<Project>().HasKey(p => p.Id);
         builder.Entity<Project>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         
-        //Isiyisichupador
-        
-        builder.UseSnakeCaseNamingConvention();
         
         builder.Entity<PaymentDetail>().ToTable("PaymentDetails");
         builder.Entity<PaymentDetail>().HasKey(p => p.Id);
@@ -69,5 +67,13 @@ public class AppDBContext : DbContext
 
         builder.Entity<Message>().ToTable("Messages");
         builder.Entity<Message>().HasKey(m => m.Id);
+        
+        // iam context
+        builder.Entity<UserAuth>().HasKey(u => u.Id);
+        builder.Entity<UserAuth>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<UserAuth>().Property(u => u.Username).IsRequired();
+        builder.Entity<UserAuth>().Property(u => u.PasswordHash).IsRequired();
+        
+        builder.UseSnakeCaseNamingConvention();
     }
 }
