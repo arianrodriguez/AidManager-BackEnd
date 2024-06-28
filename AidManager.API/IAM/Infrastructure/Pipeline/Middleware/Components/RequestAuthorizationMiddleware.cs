@@ -2,7 +2,6 @@
 using AidManager.API.IAM.Application.Internal.OutboundServices;
 using AidManager.API.IAM.Domain.Model.Queries;
 using AidManager.API.IAM.Domain.Services;
-using AidManager.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +18,10 @@ public class RequestAuthorizationMiddleware(RequestDelegate next)
         try
         {
             Console.WriteLine("Entering InvokeAsync");
-            var allowAnonymous =
-                context.Request.HttpContext.GetEndpoint()!.Metadata.Any(m =>
-                    m.GetType() == typeof(AllowAnonymousAttribute));
+            var path = context.Request.Path.Value;
+            var allowAnonymous = path.Equals("/api/v1/authentication/sign-up", StringComparison.OrdinalIgnoreCase) ||
+                                 path.Equals("/api/v1/authentication/sign-in", StringComparison.OrdinalIgnoreCase);
+
             Console.WriteLine($"Allow Anonymous is {allowAnonymous}");
             if (allowAnonymous)
             {
@@ -50,6 +50,5 @@ public class RequestAuthorizationMiddleware(RequestDelegate next)
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             await context.Response.WriteAsync(e.Message);
         }
-        
     }
 }
